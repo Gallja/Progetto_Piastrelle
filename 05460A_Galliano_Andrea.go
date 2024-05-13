@@ -73,7 +73,7 @@ func colora(p piano, x int, y int, alpha string) {
 }
 
 func spegni(p piano, x int, y int) {
-
+	delete(p.piastrelle, piastrella{x, y})
 }
 
 func regola(p piano, r string) {
