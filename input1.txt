@@ -13,6 +13,7 @@ C 4 4 r
 C 6 6 w
 S 6 6
 r w 1 g 2 b
+r z 1 g 2 b
 ? 0 0
 s
 q
