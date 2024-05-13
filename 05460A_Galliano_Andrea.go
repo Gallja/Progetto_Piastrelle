@@ -24,7 +24,7 @@ type regolaSingola struct {
 }
 
 type piano struct {
-	piastrelle map[piastrella]string
+	piastrelle map[piastrella]addendoRegola
 	regole     []regolaSingola
 }
 
@@ -61,8 +61,12 @@ func parseInput(scanner *bufio.Scanner) {
 				spegni(p, x, y)
 			case "r":
 				regola(p, argument)
+				fmt.Println(p.regole)
 			case "?":
-				fmt.Println("stato")
+				args := strings.Split(argument, " ")
+				x, _ := strconv.Atoi(args[0])
+				y, _ := strconv.Atoi(args[1])
+				stato(p, x, y)
 			case "s":
 				fmt.Println("stampa")
 			default:
@@ -73,11 +77,11 @@ func parseInput(scanner *bufio.Scanner) {
 }
 
 func creaPiano() piano {
-	return piano{}
+	return piano{make(map[piastrella]addendoRegola), []regolaSingola{}}
 }
 
 func colora(p piano, x int, y int, alpha string) {
-	p.piastrelle[piastrella{x, y}] = alpha
+	p.piastrelle[piastrella{x, y}] = addendoRegola{1, alpha}
 }
 
 func spegni(p piano, x int, y int) {
@@ -101,10 +105,18 @@ func regola(p piano, r string) {
 
 		newReg.addendi = append(newReg.addendi, addReg)
 	}
+
+	p.regole = append(p.regole, newReg)
 }
 
 func stato(p piano, x int, y int) (string, int) {
-	return "", 0
+	val, ok := p.piastrelle[piastrella{x, y}]
+
+	if ok {
+		fmt.Println(val.colore, val.coefficiente)
+	}
+
+	return val.colore, val.coefficiente
 }
 
 func stampa(p piano) {
