@@ -48,28 +48,21 @@ func parseInput(scanner *bufio.Scanner) {
 			command := input[:1]
 			argument := strings.TrimSpace(input[1:])
 
+			x, y, colore := parametrizzaInput(argument)
+
 			switch command {
 			case "C":
-				args := strings.Split(argument, " ")
-				x, _ := strconv.Atoi(args[0])
-				y, _ := strconv.Atoi(args[1])
-				colora(p, x, y, args[2])
+				colora(p, x, y, colore)
 			case "S":
-				args := strings.Split(argument, " ")
-				x, _ := strconv.Atoi(args[0])
-				y, _ := strconv.Atoi(args[1])
 				spegni(p, x, y)
 			case "r":
 				regola(p, argument)
 			case "?":
-				args := strings.Split(argument, " ")
-				x, _ := strconv.Atoi(args[0])
-				y, _ := strconv.Atoi(args[1])
 				stato(p, x, y)
 			case "s":
 				stampa(p)
 			default:
-				fmt.Println("comando non valido")
+				return
 			}
 		}
 	}
@@ -78,6 +71,27 @@ func parseInput(scanner *bufio.Scanner) {
 func creaPiano() piano {
 	mappa := make(map[piastrella]addendoRegola)
 	return piano{&mappa, &[]regolaSingola{}}
+}
+
+func parametrizzaInput(argument string) (int, int, string) {
+	if len(argument) <= 1 {
+		return 0, 0, ""
+	}
+
+	if len(argument) < 4 {
+		args := strings.Split(argument, " ")
+		x, _ := strconv.Atoi(args[0])
+		y, _ := strconv.Atoi(args[1])
+
+		return x, y, ""
+	}
+
+	args := strings.Split(argument, " ")
+	x, _ := strconv.Atoi(args[0])
+	y, _ := strconv.Atoi(args[1])
+	colore := args[2]
+
+	return x, y, colore
 }
 
 func colora(p piano, x int, y int, alpha string) {
