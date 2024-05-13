@@ -27,8 +27,6 @@ func main() {
 	scanner := bufio.NewScanner(os.Stdin)
 
 	parseInput(scanner)
-
-	fmt.Println("ciao mondo")
 }
 
 func parseInput(scanner *bufio.Scanner) {
