@@ -1,0 +1,7 @@
+C 1 2 blu
+C 3 2 rosso
+C 3 2 arancione
+C 4 5 viola
+C 6 6 magenta
+C 8 9 grigio
+S 6 6
