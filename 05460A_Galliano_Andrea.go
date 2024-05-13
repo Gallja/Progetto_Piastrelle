@@ -125,8 +125,6 @@ func stampa(p piano) {
 		stampaRegola(v)
 	}
 
-	// fmt.Print("okoko", p.regole)
-
 	fmt.Println(")")
 }
 
