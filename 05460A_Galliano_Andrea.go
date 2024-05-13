@@ -18,9 +18,14 @@ type addendoRegola struct {
 	colore       string
 }
 
+type regolaSingola struct {
+	addendi     []addendoRegola
+	targetColor string
+}
+
 type piano struct {
 	piastrelle map[piastrella]string
-	regole     []addendoRegola
+	regole     []regolaSingola
 }
 
 func main() {
@@ -55,7 +60,7 @@ func parseInput(scanner *bufio.Scanner) {
 				y, _ := strconv.Atoi(args[1])
 				spegni(p, x, y)
 			case "r":
-				fmt.Println("regola")
+				regola(p, argument)
 			case "?":
 				fmt.Println("stato")
 			case "s":
@@ -80,7 +85,22 @@ func spegni(p piano, x int, y int) {
 }
 
 func regola(p piano, r string) {
+	args := strings.Split(r, " ")
 
+	var newReg regolaSingola
+	newReg.targetColor = args[0]
+
+	for i := 1; i < len(args); i++ {
+		addReg := addendoRegola{}
+
+		if i%2 == 1 { // è un colore
+			addReg.colore = args[i]
+		} else { // è un valore intero
+			addReg.coefficiente, _ = strconv.Atoi(args[i])
+		}
+
+		newReg.addendi = append(newReg.addendi, addReg)
+	}
 }
 
 func stato(p piano, x int, y int) (string, int) {
