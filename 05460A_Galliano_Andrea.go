@@ -4,13 +4,13 @@ import (
 	"bufio"
 	"fmt"
 	"os"
+	"strconv"
+	"strings"
 )
 
 type piastrella struct {
-	x      int
-	y      int
-	colore string
-	accesa bool
+	x int
+	y int
 }
 
 type addendoRegola struct {
@@ -19,7 +19,7 @@ type addendoRegola struct {
 }
 
 type piano struct {
-	piastrelle []piastrella
+	piastrelle map[piastrella]string
 	regole     []addendoRegola
 }
 
@@ -30,6 +30,8 @@ func main() {
 }
 
 func parseInput(scanner *bufio.Scanner) {
+	p := creaPiano()
+
 	for scanner.Scan() {
 		input := scanner.Text()
 
@@ -39,11 +41,14 @@ func parseInput(scanner *bufio.Scanner) {
 
 		if len(input) > 0 {
 			command := input[:1]
-			// argument := strings.TrimSpace(input[1:])
+			argument := strings.TrimSpace(input[1:])
 
 			switch command {
 			case "C":
-				fmt.Println("colora")
+				args := strings.Split(argument, " ")
+				x, _ := strconv.Atoi(args[0])
+				y, _ := strconv.Atoi(args[1])
+				colora(p, x, y, args[2])
 			case "S":
 				fmt.Println("spegni")
 			case "r":
@@ -57,4 +62,28 @@ func parseInput(scanner *bufio.Scanner) {
 			}
 		}
 	}
+}
+
+func creaPiano() piano {
+	return piano{}
+}
+
+func colora(p piano, x int, y int, alpha string) {
+	p.piastrelle[piastrella{x, y}] = alpha
+}
+
+func spegni(p piano, x int, y int) {
+
+}
+
+func regola(p piano, r string) {
+
+}
+
+func stato(p piano, x int, y int) (string, int) {
+	return "", 0
+}
+
+func stampa(p piano) {
+
 }
