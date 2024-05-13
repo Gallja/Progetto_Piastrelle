@@ -130,8 +130,10 @@ func stampa(p piano) {
 
 func stampaRegola(r regolaSingola) {
 	fmt.Print(r.targetColor)
+
 	for i := 0; i < len(r.addendi); i++ {
 		fmt.Print(" ", r.addendi[i].coefficiente, " ", r.addendi[i].colore)
 	}
+
 	fmt.Println()
 }
