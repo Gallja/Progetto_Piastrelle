@@ -119,5 +119,21 @@ func stato(p piano, x int, y int) (string, int) {
 }
 
 func stampa(p piano) {
-	fmt.Println(p.regole)
+	fmt.Println("(")
+
+	for _, v := range *p.regole {
+		stampaRegola(v)
+	}
+
+	// fmt.Print("okoko", p.regole)
+
+	fmt.Println(")")
+}
+
+func stampaRegola(r regolaSingola) {
+	fmt.Print(r.targetColor)
+	for i := 0; i < len(r.addendi); i++ {
+		fmt.Print(" ", r.addendi[i].coefficiente, " ", r.addendi[i].colore)
+	}
+	fmt.Println()
 }
