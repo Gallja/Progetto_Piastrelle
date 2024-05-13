@@ -50,7 +50,10 @@ func parseInput(scanner *bufio.Scanner) {
 				y, _ := strconv.Atoi(args[1])
 				colora(p, x, y, args[2])
 			case "S":
-				fmt.Println("spegni")
+				args := strings.Split(argument, " ")
+				x, _ := strconv.Atoi(args[0])
+				y, _ := strconv.Atoi(args[1])
+				spegni(p, x, y)
 			case "r":
 				fmt.Println("regola")
 			case "?":
