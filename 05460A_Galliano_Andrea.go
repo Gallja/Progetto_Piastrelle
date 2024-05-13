@@ -24,8 +24,8 @@ type regolaSingola struct {
 }
 
 type piano struct {
-	piastrelle map[piastrella]addendoRegola
-	regole     []regolaSingola
+	piastrelle *map[piastrella]addendoRegola
+	regole     *[]regolaSingola
 }
 
 func main() {
@@ -76,15 +76,17 @@ func parseInput(scanner *bufio.Scanner) {
 }
 
 func creaPiano() piano {
-	return piano{make(map[piastrella]addendoRegola), []regolaSingola{}}
+	mappa := make(map[piastrella]addendoRegola)
+	return piano{&mappa, &[]regolaSingola{}}
 }
 
 func colora(p piano, x int, y int, alpha string) {
-	p.piastrelle[piastrella{x, y}] = addendoRegola{1, alpha}
+	mappa := p.piastrelle
+	(*mappa)[piastrella{x, y}] = addendoRegola{1, alpha}
 }
 
 func spegni(p piano, x int, y int) {
-	delete(p.piastrelle, piastrella{x, y})
+	delete(*p.piastrelle, piastrella{x, y})
 }
 
 func regola(p piano, r string) {
@@ -100,16 +102,14 @@ func regola(p piano, r string) {
 		} else { // è un valore intero
 			addReg.colore = args[i]
 			newReg.addendi = append(newReg.addendi, addReg)
-			fmt.Println(newReg)
 		}
 	}
 
-	p.regole = append(p.regole, newReg)
-	fmt.Println(p.regole)
+	*p.regole = append(*(p.regole), newReg)
 }
 
 func stato(p piano, x int, y int) (string, int) {
-	val, ok := p.piastrelle[piastrella{x, y}]
+	val, ok := (*p.piastrelle)[piastrella{x, y}]
 
 	if ok {
 		fmt.Println(val.colore, val.coefficiente)
