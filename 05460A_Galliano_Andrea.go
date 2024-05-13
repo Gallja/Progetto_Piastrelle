@@ -61,14 +61,13 @@ func parseInput(scanner *bufio.Scanner) {
 				spegni(p, x, y)
 			case "r":
 				regola(p, argument)
-				fmt.Println(p.regole)
 			case "?":
 				args := strings.Split(argument, " ")
 				x, _ := strconv.Atoi(args[0])
 				y, _ := strconv.Atoi(args[1])
 				stato(p, x, y)
 			case "s":
-				fmt.Println("stampa")
+				stampa(p)
 			default:
 				fmt.Println("comando non valido")
 			}
@@ -93,20 +92,20 @@ func regola(p piano, r string) {
 
 	var newReg regolaSingola
 	newReg.targetColor = args[0]
+	addReg := addendoRegola{}
 
 	for i := 1; i < len(args); i++ {
-		addReg := addendoRegola{}
-
-		if i%2 == 1 { // è un colore
-			addReg.colore = args[i]
-		} else { // è un valore intero
+		if i%2 != 0 { // è un colore
 			addReg.coefficiente, _ = strconv.Atoi(args[i])
+		} else { // è un valore intero
+			addReg.colore = args[i]
+			newReg.addendi = append(newReg.addendi, addReg)
+			fmt.Println(newReg)
 		}
-
-		newReg.addendi = append(newReg.addendi, addReg)
 	}
 
 	p.regole = append(p.regole, newReg)
+	fmt.Println(p.regole)
 }
 
 func stato(p piano, x int, y int) (string, int) {
@@ -120,5 +119,5 @@ func stato(p piano, x int, y int) (string, int) {
 }
 
 func stampa(p piano) {
-
+	fmt.Println(p.regole)
 }
