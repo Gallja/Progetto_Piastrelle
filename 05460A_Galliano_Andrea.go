@@ -177,7 +177,7 @@ func blocco(p piano, x, y int) int {
 		adiacenti := cercaAdiacenti(p, piastrella_)
 
 		for i := 0; i < len(adiacenti); i++ {
-			if !contains(piastrella_, piastrelleVisitate) {
+			if !contains(adiacenti[i], piastrelleVisitate) {
 				piastrelleVisitate = append(piastrelleVisitate, adiacenti[i])
 				val := (*mappa)[adiacenti[i]]
 				sommaIntensita += val.coefficiente
@@ -202,7 +202,6 @@ func cercaAdiacenti(p piano, piastrella_ piastrella) []piastrella {
 		_, ok := (*mappa)[piastrella{piastrella_.x + diffX[i], piastrella_.y + diffY[i]}]
 
 		if ok {
-			fmt.Println(piastrella_.x+diffX[i], piastrella_.y+diffY[i])
 			sliceRet = append(sliceRet, piastrella{piastrella_.x + diffX[i], piastrella_.y + diffY[i]})
 		}
 	}
