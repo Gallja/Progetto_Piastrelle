@@ -13,18 +13,18 @@ type piastrella struct {
 	y int
 }
 
-type addendoRegola struct {
+type colorazione struct {
 	coefficiente int
 	colore       string
 }
 
 type regolaSingola struct {
-	addendi     []addendoRegola
+	addendi     []colorazione
 	targetColor string
 }
 
 type piano struct {
-	piastrelle *map[piastrella]addendoRegola
+	piastrelle *map[piastrella]colorazione
 	regole     *[]regolaSingola
 }
 
@@ -38,6 +38,11 @@ func main() {
 	}
 }
 
+func creaPiano() piano {
+	mappa := make(map[piastrella]colorazione)
+	return piano{&mappa, &[]regolaSingola{}}
+}
+
 func esegui(p piano, s string) {
 	if s == "q" {
 		return
@@ -47,7 +52,7 @@ func esegui(p piano, s string) {
 		command := s[:1]
 		argument := strings.TrimSpace(s[1:])
 
-		x, y, colore := parametrizzaInput(argument)
+		x, y, colore := parseInput(argument)
 
 		switch command {
 		case "C":
@@ -66,12 +71,7 @@ func esegui(p piano, s string) {
 	}
 }
 
-func creaPiano() piano {
-	mappa := make(map[piastrella]addendoRegola)
-	return piano{&mappa, &[]regolaSingola{}}
-}
-
-func parametrizzaInput(argument string) (int, int, string) {
+func parseInput(argument string) (int, int, string) {
 	if len(argument) <= 1 {
 		return 0, 0, ""
 	}
@@ -94,7 +94,7 @@ func parametrizzaInput(argument string) (int, int, string) {
 
 func colora(p piano, x int, y int, alpha string) {
 	mappa := p.piastrelle
-	(*mappa)[piastrella{x, y}] = addendoRegola{1, alpha}
+	(*mappa)[piastrella{x, y}] = colorazione{1, alpha}
 }
 
 func spegni(p piano, x int, y int) {
@@ -106,7 +106,7 @@ func regola(p piano, r string) {
 
 	var newReg regolaSingola
 	newReg.targetColor = args[0]
-	addReg := addendoRegola{}
+	addReg := colorazione{}
 
 	for i := 1; i < len(args); i++ {
 		if i%2 != 0 { // è un colore
