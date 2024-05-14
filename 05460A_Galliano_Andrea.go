@@ -14,8 +14,8 @@ type piastrella struct {
 }
 
 type colorazione struct {
-	coefficiente int
-	colore       string
+	coefficiente int    // intensità
+	colore       string // {a, b, ..., z} --> colore
 }
 
 type regolaSingola struct {
@@ -148,4 +148,8 @@ func stampaRegola(r regolaSingola) {
 	}
 
 	fmt.Println()
+}
+
+func blocco(x, y int) int {
+	return 0
 }
