@@ -30,40 +30,38 @@ type piano struct {
 
 func main() {
 	scanner := bufio.NewScanner(os.Stdin)
-
-	parseInput(scanner)
-}
-
-func parseInput(scanner *bufio.Scanner) {
 	p := creaPiano()
 
 	for scanner.Scan() {
 		input := scanner.Text()
+		esegui(p, input)
+	}
+}
 
-		if input == "q" {
-			break
-		}
+func esegui(p piano, s string) {
+	if s == "q" {
+		return
+	}
 
-		if len(input) > 0 {
-			command := input[:1]
-			argument := strings.TrimSpace(input[1:])
+	if len(s) > 0 {
+		command := s[:1]
+		argument := strings.TrimSpace(s[1:])
 
-			x, y, colore := parametrizzaInput(argument)
+		x, y, colore := parametrizzaInput(argument)
 
-			switch command {
-			case "C":
-				colora(p, x, y, colore)
-			case "S":
-				spegni(p, x, y)
-			case "r":
-				regola(p, argument)
-			case "?":
-				stato(p, x, y)
-			case "s":
-				stampa(p)
-			default:
-				return
-			}
+		switch command {
+		case "C":
+			colora(p, x, y, colore)
+		case "S":
+			spegni(p, x, y)
+		case "r":
+			regola(p, argument)
+		case "?":
+			stato(p, x, y)
+		case "s":
+			stampa(p)
+		default:
+			return
 		}
 	}
 }
