@@ -65,6 +65,9 @@ func esegui(p piano, s string) {
 			stato(p, x, y)
 		case "s":
 			stampa(p)
+		case "b":
+			sommaIntensita := blocco(p, x, y)
+			fmt.Println(sommaIntensita)
 		default:
 			return
 		}
@@ -150,6 +153,71 @@ func stampaRegola(r regolaSingola) {
 	fmt.Println()
 }
 
-func blocco(x, y int) int {
-	return 0
+func blocco(p piano, x, y int) int {
+	mappa := p.piastrelle
+	val, ok := (*mappa)[piastrella{x, y}]
+	sommaIntensita := 0
+
+	// piastrella spenta
+	if !ok {
+		return 0
+	}
+
+	// ricerca del blocco a partire dalle coordinate avute per argomento
+	sommaIntensita += val.coefficiente
+
+	coda := queue{nil}
+	coda.enqueue(piastrella{x, y})
+
+	piastrelleVisitate := []piastrella{}
+
+	for !coda.isEmpty() {
+		piastrella_ := coda.dequeue()
+		piastrelleVisitate = append(piastrelleVisitate, piastrella_)
+
+		adiacenti := cercaAdiacenti(p, piastrella_)
+
+		for i := 0; i < len(adiacenti); i++ {
+			if !contains(adiacenti, piastrelleVisitate) {
+				piastrelleVisitate = append(piastrelleVisitate, adiacenti[i])
+				val := (*mappa)[adiacenti[i]]
+				sommaIntensita += val.coefficiente
+				coda.enqueue(adiacenti[i])
+			}
+		}
+
+	}
+
+	return sommaIntensita
+}
+
+func cercaAdiacenti(p piano, piastrella_ piastrella) []piastrella {
+	sliceRet := []piastrella{}
+	mappa := p.piastrelle
+
+	// le 8 combinazioni possibili per ogni piastrella:
+	diffX := []int{-1, 0, 0, 1, -1, -1, 1, 1}
+	diffY := []int{-1, -1, 1, -1, 1, 0, 0, 1}
+
+	for i := 0; i < len(diffX); i++ {
+		_, ok := (*mappa)[piastrella{piastrella_.x - diffX[i], piastrella_.y - diffY[i]}]
+
+		if ok {
+			sliceRet = append(sliceRet, piastrella{piastrella_.x - diffX[i], piastrella_.y - diffY[i]})
+		}
+	}
+
+	return sliceRet
+}
+
+func contains(adiacenti, visitate []piastrella) bool {
+	for i := 0; i < len(adiacenti); i++ {
+		for j := 0; j < len(visitate); j++ {
+			if adiacenti[i].x == visitate[j].x && adiacenti[i].y == visitate[j].y {
+				return true
+			}
+		}
+	}
+
+	return false
 }
