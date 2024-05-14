@@ -19,8 +19,8 @@ type colorazione struct {
 }
 
 type regolaSingola struct {
-	addendi     []colorazione
-	targetColor string
+	addendi      []colorazione
+	coloreFinale string
 }
 
 type piano struct {
@@ -105,7 +105,7 @@ func regola(p piano, r string) {
 	args := strings.Split(r, " ")
 
 	var newReg regolaSingola
-	newReg.targetColor = args[0]
+	newReg.coloreFinale = args[0]
 	addReg := colorazione{}
 
 	for i := 1; i < len(args); i++ {
@@ -141,7 +141,7 @@ func stampa(p piano) {
 }
 
 func stampaRegola(r regolaSingola) {
-	fmt.Print(r.targetColor)
+	fmt.Print(r.coloreFinale)
 
 	for i := 0; i < len(r.addendi); i++ {
 		fmt.Print(" ", r.addendi[i].coefficiente, " ", r.addendi[i].colore)
