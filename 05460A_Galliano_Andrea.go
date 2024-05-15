@@ -21,6 +21,7 @@ type colorazione struct {
 type regolaSingola struct {
 	addendi      []colorazione
 	coloreFinale string
+	consumo      int
 }
 
 type piano struct {
@@ -113,6 +114,7 @@ func regola(p piano, r string) {
 	args := strings.Split(r, " ")
 
 	var newReg regolaSingola
+	newReg.consumo = 0
 	newReg.coloreFinale = args[0]
 	addReg := colorazione{}
 
@@ -232,6 +234,27 @@ func propaga(p piano, x, y int) {
 	mappa := p.piastrelle
 
 	val := (*mappa)[piastrella{x, y}]
+
+	adiacenti := cercaAdiacenti(p, piastrella{x, y})
+
+	for i := 0; i < len(adiacenti); i++ {
+		valAd := (*mappa)[adiacenti[i]]
+
+		for j := 0; j < len(*p.regole); j++ {
+			slice := *(p.regole)
+			valBck := slice[j].addendi[i].coefficiente
+			coloreRegola := slice[j].addendi[i].colore
+
+			if coloreRegola == valAd.colore {
+				valBck--
+			}
+
+			if valBck == 0 {
+				break
+			}
+		}
+
+	}
 
 	fmt.Println(val)
 }
