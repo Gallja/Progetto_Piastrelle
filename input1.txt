@@ -14,6 +14,9 @@ C 6 6 w
 S 6 6
 r w 1 g 2 b
 r z 1 g 2 b
+r y 1 b 1 r
+r g 2 b 1 r
+r t 1 b 1 g 1 r
 ? 0 0
 s
 b 0 0
