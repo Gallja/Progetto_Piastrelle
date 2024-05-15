@@ -169,16 +169,18 @@ func blocco(p piano, x, y int) int {
 	coda := queue{nil}
 	coda.enqueue(piastrella{x, y})
 
-	piastrelleVisitate := []piastrella{}
+	visitate := make(map[piastrella]struct{})
 
 	for !coda.isEmpty() {
 		piastrella_ := coda.dequeue()
-		piastrelleVisitate = append(piastrelleVisitate, piastrella_)
+		visitate[piastrella_] = struct{}{}
 		adiacenti := cercaAdiacenti(p, piastrella_)
 
 		for i := 0; i < len(adiacenti); i++ {
-			if !contains(adiacenti[i], piastrelleVisitate) {
-				piastrelleVisitate = append(piastrelleVisitate, adiacenti[i])
+			_, ok := visitate[adiacenti[i]]
+
+			if !ok {
+				visitate[adiacenti[i]] = struct{}{}
 				val := (*mappa)[adiacenti[i]]
 				sommaIntensita += val.coefficiente
 				coda.enqueue(adiacenti[i])
@@ -207,14 +209,4 @@ func cercaAdiacenti(p piano, piastrella_ piastrella) []piastrella {
 	}
 
 	return sliceRet
-}
-
-func contains(piastrella_ piastrella, visitate []piastrella) bool {
-	for i := 0; i < len(visitate); i++ {
-		if piastrella_.x == visitate[i].x && piastrella_.y == visitate[i].y {
-			return true
-		}
-	}
-
-	return false
 }
