@@ -68,6 +68,9 @@ func esegui(p piano, s string) {
 		case "b":
 			sommaIntensita := blocco(p, x, y)
 			fmt.Println(sommaIntensita)
+		case "B":
+			sommaIntensita := bloccoOmog(p, x, y)
+			fmt.Println(sommaIntensita)
 		default:
 			return
 		}
@@ -153,7 +156,7 @@ func stampaRegola(r regolaSingola) {
 	fmt.Println()
 }
 
-func blocco(p piano, x, y int) int {
+func bloccoGenerico(p piano, x, y int, colore bool) int {
 	mappa := p.piastrelle
 	start, ok := (*mappa)[piastrella{x, y}]
 	sommaIntensita := 0
@@ -173,7 +176,7 @@ func blocco(p piano, x, y int) int {
 
 	for !coda.isEmpty() {
 		piastrella_ := coda.dequeue()
-		visitate[piastrella_] = struct{}{}
+		visitate[piastrella_] = struct{}{} // utilizzo una mappa che contiene solo le chiavi (e come valori una struct vuota) per utilizzarla come set
 		adiacenti := cercaAdiacenti(p, piastrella_)
 
 		for i := 0; i < len(adiacenti); i++ {
@@ -209,4 +212,12 @@ func cercaAdiacenti(p piano, piastrella_ piastrella) []piastrella {
 	}
 
 	return sliceRet
+}
+
+func blocco(p piano, x, y int) int {
+	return bloccoGenerico(p, x, y, false)
+}
+
+func bloccoOmog(p piano, x, y int) int {
+	return bloccoGenerico(p, x, y, true)
 }
