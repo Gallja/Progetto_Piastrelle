@@ -185,8 +185,16 @@ func bloccoGenerico(p piano, x, y int, colore bool) int {
 			if !ok {
 				visitate[adiacenti[i]] = struct{}{}
 				val := (*mappa)[adiacenti[i]]
-				sommaIntensita += val.coefficiente
-				coda.enqueue(adiacenti[i])
+
+				if !colore {
+					sommaIntensita += val.coefficiente
+					coda.enqueue(adiacenti[i])
+				} else {
+					if val.colore == start.colore {
+						sommaIntensita += val.coefficiente
+					}
+				}
+
 			}
 		}
 
