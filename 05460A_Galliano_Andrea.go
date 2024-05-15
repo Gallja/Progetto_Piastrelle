@@ -71,6 +71,8 @@ func esegui(p piano, s string) {
 		case "B":
 			sommaIntensita := bloccoOmog(p, x, y)
 			fmt.Println(sommaIntensita)
+		case "p":
+			propaga(p, x, y)
 		default:
 			return
 		}
@@ -224,4 +226,12 @@ func blocco(p piano, x, y int) int {
 
 func bloccoOmog(p piano, x, y int) int {
 	return bloccoGenerico(p, x, y, true)
+}
+
+func propaga(p piano, x, y int) {
+	mappa := p.piastrelle
+
+	val := (*mappa)[piastrella{x, y}]
+
+	fmt.Println(val)
 }
