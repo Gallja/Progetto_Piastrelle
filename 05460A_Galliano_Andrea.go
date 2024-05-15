@@ -156,7 +156,7 @@ func stampaRegola(r regolaSingola) {
 	fmt.Println()
 }
 
-func bloccoGenerico(p piano, x, y int, colore bool) int {
+func bloccoGenerico(p piano, x, y int, omogeneo bool) int {
 	mappa := p.piastrelle
 	start, ok := (*mappa)[piastrella{x, y}]
 	sommaIntensita := 0
@@ -186,16 +186,12 @@ func bloccoGenerico(p piano, x, y int, colore bool) int {
 				visitate[adiacenti[i]] = struct{}{}
 				val := (*mappa)[adiacenti[i]]
 
-				if !colore {
+				if !omogeneo || val.colore == start.colore {
 					sommaIntensita += val.coefficiente
 					coda.enqueue(adiacenti[i])
-				} else {
-					if val.colore == start.colore {
-						sommaIntensita += val.coefficiente
-					}
 				}
-
 			}
+
 		}
 
 	}
