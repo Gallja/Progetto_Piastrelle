@@ -236,25 +236,34 @@ func propaga(p piano, x, y int) {
 	val := (*mappa)[piastrella{x, y}]
 
 	adiacenti := cercaAdiacenti(p, piastrella{x, y})
+	regole := (*p.regole)
 
-	for i := 0; i < len(adiacenti); i++ {
-		valAd := (*mappa)[adiacenti[i]]
+	for i := 0; i < len(regole); i++ {
+		rispettata := true
 
-		for j := 0; j < len(*p.regole); j++ {
-			slice := *(p.regole)
-			valBck := slice[j].addendi[i].coefficiente
-			coloreRegola := slice[j].addendi[i].colore
+		for j := 0; j < len(regole[i].addendi); j++ {
+			coeffBkcp := regole[i].addendi[j].coefficiente
 
-			if coloreRegola == valAd.colore {
-				valBck--
+			for k := 0; k < len(adiacenti) && coeffBkcp > 0; k++ {
+
+				if (*mappa)[adiacenti[k]].colore == regole[i].addendi[j].colore {
+					coeffBkcp--
+				}
+
 			}
 
-			if valBck == 0 {
+			if coeffBkcp > 0 {
+				rispettata = false
 				break
 			}
 		}
 
-	}
+		if rispettata {
+			val.colore = regole[i].coloreFinale
+			regole[i].consumo++
 
-	fmt.Println(val)
+			break
+		}
+
+	}
 }
