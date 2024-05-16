@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"fmt"
 	"os"
+	"sort"
 	"strconv"
 	"strings"
 )
@@ -74,6 +75,8 @@ func esegui(p piano, s string) {
 			fmt.Println(sommaIntensita)
 		case "p":
 			propaga(p, x, y)
+		case "o":
+			ordina(p)
 		default:
 			return
 		}
@@ -267,4 +270,12 @@ func propaga(p piano, x, y int) {
 		}
 
 	}
+}
+
+func ordina(p piano) {
+	regole := *p.regole
+
+	sort.SliceStable(regole, func(i, j int) bool {
+		return regole[i].consumo < regole[j].consumo
+	})
 }
