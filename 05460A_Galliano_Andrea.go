@@ -259,7 +259,8 @@ func propaga(p piano, x, y int) {
 		}
 
 		if rispettata {
-			val.colore = regole[i].coloreFinale
+			(*mappa)[piastrella{x, y}] = colorazione{val.coefficiente, regole[i].coloreFinale}
+
 			regole[i].consumo++
 
 			break
