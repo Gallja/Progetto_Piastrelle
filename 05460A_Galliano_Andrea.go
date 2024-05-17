@@ -54,11 +54,11 @@ func esegui(p piano, s string) {
 		command := s[:1]
 		argument := strings.TrimSpace(s[1:])
 
-		x, y, colore := parseInput(argument)
+		x, y, colore, intensita := parseInput(argument)
 
 		switch command {
 		case "C":
-			colora(p, x, y, colore)
+			colora(p, x, y, colore, intensita)
 		case "S":
 			spegni(p, x, y)
 		case "r":
@@ -83,9 +83,9 @@ func esegui(p piano, s string) {
 	}
 }
 
-func parseInput(argument string) (int, int, string) {
+func parseInput(argument string) (int, int, string, int) {
 	if len(argument) <= 1 {
-		return 0, 0, ""
+		return 0, 0, "", 0
 	}
 
 	if len(argument) < 4 {
@@ -93,20 +93,21 @@ func parseInput(argument string) (int, int, string) {
 		x, _ := strconv.Atoi(args[0])
 		y, _ := strconv.Atoi(args[1])
 
-		return x, y, ""
+		return x, y, "", 0
 	}
 
 	args := strings.Split(argument, " ")
 	x, _ := strconv.Atoi(args[0])
 	y, _ := strconv.Atoi(args[1])
 	colore := args[2]
+	intensita, _ := strconv.Atoi(args[3])
 
-	return x, y, colore
+	return x, y, colore, intensita
 }
 
-func colora(p piano, x int, y int, alpha string) {
+func colora(p piano, x int, y int, alpha string, i int) {
 	mappa := p.piastrelle
-	(*mappa)[piastrella{x, y}] = colorazione{1, alpha}
+	(*mappa)[piastrella{x, y}] = colorazione{i, alpha}
 }
 
 func spegni(p piano, x int, y int) {
@@ -154,7 +155,7 @@ func stampa(p piano) {
 }
 
 func stampaRegola(r regolaSingola) {
-	fmt.Print(r.coloreFinale)
+	fmt.Print(r.coloreFinale, ":")
 
 	for i := 0; i < len(r.addendi); i++ {
 		fmt.Print(" ", r.addendi[i].coefficiente, " ", r.addendi[i].colore)
