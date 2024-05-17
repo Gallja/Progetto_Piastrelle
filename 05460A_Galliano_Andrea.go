@@ -191,6 +191,7 @@ func bloccoGenerico(p piano, x, y int, omogeneo bool) (int, []piastrella) {
 	for !coda.isEmpty() {
 		piastrella_ := coda.dequeue()
 		visitate[piastrella_] = struct{}{} // utilizzo una mappa che contiene solo le chiavi (e come valori una struct vuota) per utilizzarla come set
+		// utilizzo la struct vuota poiché in Go non vi sono tipi Set; avrei potuto usare un booleano come valore, ma con una struct vuota riesco a risparmiare spazio in memoria
 		adiacenti := cercaAdiacenti(p, piastrella_)
 
 		for i := 0; i < len(adiacenti); i++ {
