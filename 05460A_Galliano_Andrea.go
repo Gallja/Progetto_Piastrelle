@@ -75,6 +75,8 @@ func esegui(p piano, s string) {
 			fmt.Println(sommaIntensita)
 		case "p":
 			propaga(p, x, y)
+		case "P":
+			propagaBlocco(p, x, y)
 		case "o":
 			ordina(p)
 		default:
@@ -164,14 +166,16 @@ func stampaRegola(r regolaSingola) {
 	fmt.Println()
 }
 
-func bloccoGenerico(p piano, x, y int, omogeneo bool) int {
+func bloccoGenerico(p piano, x, y int, omogeneo bool) (int, []piastrella) {
 	mappa := p.piastrelle
 	start, ok := (*mappa)[piastrella{x, y}]
 	sommaIntensita := 0
 
+	sliceRet := []piastrella{}
+
 	// piastrella spenta
 	if !ok {
-		return 0
+		return 0, nil
 	}
 
 	sommaIntensita += start.coefficiente
@@ -196,6 +200,7 @@ func bloccoGenerico(p piano, x, y int, omogeneo bool) int {
 
 				if !omogeneo || val.colore == start.colore {
 					sommaIntensita += val.coefficiente
+					sliceRet = append(sliceRet, adiacenti[i])
 					coda.enqueue(adiacenti[i])
 				}
 			}
@@ -204,7 +209,7 @@ func bloccoGenerico(p piano, x, y int, omogeneo bool) int {
 
 	}
 
-	return sommaIntensita
+	return sommaIntensita, sliceRet
 }
 
 func cercaAdiacenti(p piano, piastrella_ piastrella) []piastrella {
@@ -227,17 +232,23 @@ func cercaAdiacenti(p piano, piastrella_ piastrella) []piastrella {
 }
 
 func blocco(p piano, x, y int) int {
-	return bloccoGenerico(p, x, y, false)
+	sommaIntensita, _ := bloccoGenerico(p, x, y, false)
+
+	return sommaIntensita
 }
 
 func bloccoOmog(p piano, x, y int) int {
-	return bloccoGenerico(p, x, y, true)
+	sommaIntensita, _ := bloccoGenerico(p, x, y, true)
+
+	return sommaIntensita
 }
 
-func propaga(p piano, x, y int) {
+func propagaGenerico(p piano, x, y int, blocco bool) {
 	mappa := p.piastrelle
 
 	val, ok := (*mappa)[piastrella{x, y}]
+
+	var regola regolaSingola
 
 	if !ok {
 		colora(p, x, y, "", 1)
@@ -261,23 +272,46 @@ func propaga(p piano, x, y int) {
 
 			}
 
+			regola = regole[i]
+
 			if coeffBkcp > 0 {
 				rispettata = false
 				break
 			}
 		}
 
-		if rispettata {
+		if rispettata && !blocco {
 			(*mappa)[piastrella{x, y}] = colorazione{val.coefficiente, regole[i].coloreFinale}
 
 			regole[i].consumo++
 
-			break
+			break // else if rispettata e blocco = true --> esegui funzione propagaBlocco(...)
+		} else if rispettata && blocco {
+			coloraBlocco(p, x, y, regola)
 		} else if !ok {
 			spegni(p, x, y)
 		}
 
 	}
+}
+
+func coloraBlocco(p piano, x, y int, regola regolaSingola) {
+	_, piastrelleBlocco := bloccoGenerico(p, x, y, false)
+	mappa := (p.piastrelle)
+
+	for i := 0; i < len(piastrelleBlocco); i++ {
+		val := (*mappa)[piastrella{x, y}]
+
+		(*mappa)[piastrella{x, y}] = colorazione{val.coefficiente, regola.coloreFinale}
+	}
+}
+
+func propaga(p piano, x, y int) {
+	propagaGenerico(p, x, y, false)
+}
+
+func propagaBlocco(p piano, x, y int) {
+	propagaGenerico(p, x, y, true)
 }
 
 func ordina(p piano) {
