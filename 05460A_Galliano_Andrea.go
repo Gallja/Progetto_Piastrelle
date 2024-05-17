@@ -172,6 +172,7 @@ func bloccoGenerico(p piano, x, y int, omogeneo bool) (int, []piastrella) {
 	sommaIntensita := 0
 
 	sliceRet := []piastrella{}
+	sliceRet = append(sliceRet, piastrella{x, y})
 
 	// piastrella spenta
 	if !ok {
@@ -245,9 +246,7 @@ func bloccoOmog(p piano, x, y int) int {
 
 func propagaGenerico(p piano, x, y int, blocco bool) {
 	mappa := p.piastrelle
-
 	val, ok := (*mappa)[piastrella{x, y}]
-
 	var regola regolaSingola
 
 	if !ok {
@@ -255,7 +254,10 @@ func propagaGenerico(p piano, x, y int, blocco bool) {
 		val = (*mappa)[piastrella{x, y}]
 	}
 
+	fmt.Println(val)
+
 	adiacenti := cercaAdiacenti(p, piastrella{x, y})
+	fmt.Println(adiacenti)
 	regole := (*p.regole)
 
 	for i := 0; i < len(regole); i++ {
@@ -285,11 +287,15 @@ func propagaGenerico(p piano, x, y int, blocco bool) {
 
 			regole[i].consumo++
 
-			break // else if rispettata e blocco = true --> esegui funzione propagaBlocco(...)
+			break
 		} else if rispettata && blocco {
 			coloraBlocco(p, x, y, regola)
-		} else if !ok {
+
+			break
+		} else if !ok && i == len(regole)-1 {
 			spegni(p, x, y)
+
+			break
 		}
 
 	}
@@ -300,9 +306,9 @@ func coloraBlocco(p piano, x, y int, regola regolaSingola) {
 	mappa := (p.piastrelle)
 
 	for i := 0; i < len(piastrelleBlocco); i++ {
-		val := (*mappa)[piastrella{x, y}]
+		val := (*mappa)[piastrelleBlocco[i]]
 
-		(*mappa)[piastrella{x, y}] = colorazione{val.coefficiente, regola.coloreFinale}
+		(*mappa)[piastrelleBlocco[i]] = colorazione{val.coefficiente, regola.coloreFinale}
 	}
 }
 
