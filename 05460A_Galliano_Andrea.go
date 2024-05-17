@@ -79,6 +79,7 @@ func esegui(p piano, s string) {
 			propagaBlocco(p, x, y)
 		case "o":
 			ordina(p)
+			fmt.Println(p.regole)
 		default:
 			return
 		}
