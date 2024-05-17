@@ -90,15 +90,15 @@ func parseInput(argument string) (int, int, string, int) {
 		return 0, 0, "", 0
 	}
 
-	if len(argument) < 4 {
-		args := strings.Split(argument, " ")
+	args := strings.Split(argument, " ")
+
+	if len(args) < 4 {
 		x, _ := strconv.Atoi(args[0])
 		y, _ := strconv.Atoi(args[1])
 
 		return x, y, "", 0
 	}
 
-	args := strings.Split(argument, " ")
 	x, _ := strconv.Atoi(args[0])
 	y, _ := strconv.Atoi(args[1])
 	colore := args[2]
@@ -254,10 +254,7 @@ func propagaGenerico(p piano, x, y int, blocco bool) {
 		val = (*mappa)[piastrella{x, y}]
 	}
 
-	fmt.Println(val)
-
 	adiacenti := cercaAdiacenti(p, piastrella{x, y})
-	fmt.Println(adiacenti)
 	regole := (*p.regole)
 
 	for i := 0; i < len(regole); i++ {
