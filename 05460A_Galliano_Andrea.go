@@ -237,7 +237,12 @@ func bloccoOmog(p piano, x, y int) int {
 func propaga(p piano, x, y int) {
 	mappa := p.piastrelle
 
-	val := (*mappa)[piastrella{x, y}]
+	val, ok := (*mappa)[piastrella{x, y}]
+
+	if !ok {
+		colora(p, x, y, "", 1)
+		val = (*mappa)[piastrella{x, y}]
+	}
 
 	adiacenti := cercaAdiacenti(p, piastrella{x, y})
 	regole := (*p.regole)
