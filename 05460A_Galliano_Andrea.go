@@ -273,6 +273,8 @@ func propaga(p piano, x, y int) {
 			regole[i].consumo++
 
 			break
+		} else if !ok {
+			spegni(p, x, y)
 		}
 
 	}
