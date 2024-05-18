@@ -2,6 +2,7 @@ package main
 
 type queue struct {
 	head *queueNode
+	tail *queueNode
 }
 
 type queueNode struct {
@@ -12,22 +13,22 @@ type queueNode struct {
 func (q *queue) enqueue(value piastrella) {
 	if q.head == nil {
 		q.head = &queueNode{nil, value}
+		q.tail = q.head
 		return
 	}
 
-	node := q.head
-
-	for node.next != nil {
-		node = node.next
-	}
-
-	newNode := queueNode{nil, value}
-	node.next = &newNode
+	newNode := &queueNode{nil, value}
+	q.tail.next = newNode
+	q.tail = newNode
 }
 
 func (q *queue) dequeue() piastrella {
 	head := q.head
 	q.head = q.head.next
+
+	if q.head == nil {
+		q.tail = nil
+	}
 
 	return head.value
 }

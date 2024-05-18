@@ -183,7 +183,7 @@ func bloccoGenerico(p piano, x, y int, omogeneo bool) (int, []piastrella) {
 	sommaIntensita += start.coefficiente
 
 	// ricerca del blocco a partire dalle coordinate avute per argomento
-	coda := queue{nil}
+	coda := queue{nil, nil}
 	coda.enqueue(piastrella{x, y})
 
 	visitate := make(map[piastrella]struct{})
