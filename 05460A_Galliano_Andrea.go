@@ -220,14 +220,14 @@ func cercaAdiacenti(p piano, piastrella_ piastrella) []piastrella {
 	mappa := p.piastrelle
 
 	// le 8 combinazioni possibili per ogni piastrella:
-	diffX := []int{-1, 0, 0, 1, -1, -1, 1, 1}
-	diffY := []int{-1, -1, 1, -1, 1, 0, 0, 1}
+	combX := []int{-1, 0, 0, 1, -1, -1, 1, 1}
+	combY := []int{-1, -1, 1, -1, 1, 0, 0, 1}
 
-	for i := 0; i < len(diffX); i++ {
-		_, ok := (*mappa)[piastrella{piastrella_.x + diffX[i], piastrella_.y + diffY[i]}]
+	for i := 0; i < len(combX); i++ {
+		_, ok := (*mappa)[piastrella{piastrella_.x + combX[i], piastrella_.y + combY[i]}]
 
 		if ok {
-			sliceRet = append(sliceRet, piastrella{piastrella_.x + diffX[i], piastrella_.y + diffY[i]})
+			sliceRet = append(sliceRet, piastrella{piastrella_.x + combX[i], piastrella_.y + combY[i]})
 		}
 	}
 
