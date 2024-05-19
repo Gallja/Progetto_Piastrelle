@@ -304,12 +304,13 @@ func propagaGenerico(p piano, x, y int, blocco bool) {
 
 func coloraBlocco(p piano, x, y int, regola regolaSingola) {
 	_, piastrelleBlocco := bloccoGenerico(p, x, y, false)
-	mappa := (p.piastrelle)
+
+	mappaColoriBlocco := make(map[piastrella]regolaSingola)
+
+	mappaColoriBlocco[piastrella{x, y}] = regola
 
 	for i := 0; i < len(piastrelleBlocco); i++ {
-		val := (*mappa)[piastrelleBlocco[i]]
-
-		(*mappa)[piastrelleBlocco[i]] = colorazione{val.coefficiente, regola.coloreFinale}
+		propagaGenerico(p, piastrelleBlocco[i].x, piastrelleBlocco[i].y, false)
 	}
 }
 
