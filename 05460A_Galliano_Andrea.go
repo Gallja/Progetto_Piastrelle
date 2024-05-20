@@ -303,19 +303,19 @@ func propagaGenerico(p piano, x, y int, blocco bool) {
 func coloraBlocco(p piano, x, y int, regola regolaSingola, regole []regolaSingola) {
 	mappa := p.piastrelle
 	_, piastrelleBlocco := bloccoGenerico(p, x, y, false)
-	adiacenti := cercaAdiacenti(p, piastrella{x, y})
 
 	mappaColoriBlocco := make(map[piastrella]regolaSingola)
 
 	mappaColoriBlocco[piastrella{x, y}] = regola
 
 	for i := 1; i < len(piastrelleBlocco); i++ {
-		rispettata := true
+		adiacenti := cercaAdiacenti(p, piastrelleBlocco[i])
 
 		for j := 0; j < len(regole); j++ {
-			coeffBkcp := regole[j].addendi[j].coefficiente
+			rispettata := true
 
 			for l := 0; l < len(regole[j].addendi); l++ {
+				coeffBkcp := regole[j].addendi[l].coefficiente
 
 				for k := 0; k < len(adiacenti); k++ {
 					if (*mappa)[adiacenti[k]].colore == regole[j].addendi[l].colore {
@@ -323,25 +323,21 @@ func coloraBlocco(p piano, x, y int, regola regolaSingola, regole []regolaSingol
 					}
 				}
 
+				if coeffBkcp > 0 {
+					rispettata = false
+					break
+				}
+
 			}
 
-			regola = regole[j]
-
-			if coeffBkcp > 0 {
-				rispettata = false
-				break
+			if rispettata {
+				mappaColoriBlocco[piastrella{piastrelleBlocco[i].x, piastrelleBlocco[i].y}] = regole[j]
+				regole[j].consumo++
 			}
-
-		}
-
-		if rispettata {
-			mappaColoriBlocco[piastrella{piastrelleBlocco[i].x, piastrelleBlocco[i].y}] = regola
-			regola.consumo++
 		}
 
 	}
 
-	// chiamata alla funzione che cambia il colore delle piastrelle in base ai dati di mappaColoriBlocco
 	coloraPiastrelle(p, mappaColoriBlocco)
 }
 
