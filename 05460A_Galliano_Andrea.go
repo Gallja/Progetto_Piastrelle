@@ -287,7 +287,7 @@ func propagaGenerico(p piano, x, y int, blocco bool) {
 			regole[i].consumo++
 
 			break
-		} else if rispettata && blocco {
+		} else if rispettata && blocco && ok {
 			coloraBlocco(p, x, y, regola, regole)
 
 			break
