@@ -12,3 +12,4 @@ Per poter affrontare ragionevolmente il problmema, sono state utilizzate apposit
 Per prima cosa, è necessario utilizzare una struttura che indichi le coordinate **_(x, y)_** di una **_Piastrella_**:  
 
 ![struttura piastrella](img/piastrella.png)
+
