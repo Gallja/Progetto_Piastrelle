@@ -109,8 +109,7 @@ func parseInput(argument string) (int, int, string, int) {
 }
 
 func colora(p piano, x int, y int, alpha string, i int) {
-	piastrelleInPiano := p.piastrelle
-	(*piastrelleInPiano)[piastrella{x, y}] = colorazione{i, alpha}
+	(*p.piastrelle)[piastrella{x, y}] = colorazione{i, alpha}
 }
 
 func spegni(p piano, x int, y int) {
