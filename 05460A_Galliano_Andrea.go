@@ -246,14 +246,10 @@ func bloccoOmog(p piano, x, y int) int {
 	return sommaIntensita
 }
 
-func propagaGenerico(p piano, x, y int, blocco bool) {
+func propagaGenerico(p piano, x, y int) map[piastrella]regolaSingola {
 	piastrellePiano := p.piastrelle
-	coefficiente := 1
-	val, ok := (*piastrellePiano)[piastrella{x, y}]
-
-	if ok {
-		coefficiente = val.coefficiente
-	}
+	_, ok := (*piastrellePiano)[piastrella{x, y}]
+	mappaColoriBlocco := make(map[piastrella]regolaSingola)
 
 	adiacenti := cercaAdiacenti(p, piastrella{x, y})
 	regole := (*p.regole)
@@ -274,19 +270,15 @@ func propagaGenerico(p piano, x, y int, blocco bool) {
 
 			if coeffAddendo > 0 {
 				rispettata = false
+
 				break
 			}
 		}
 
-		if rispettata && !blocco {
-			(*piastrellePiano)[piastrella{x, y}] = colorazione{coefficiente, regole[i].coloreFinale}
-
+		if rispettata {
 			regole[i].consumo++
 
-			break
-		} else if rispettata && blocco && ok {
-			regole[i].consumo++
-			coloraBlocco(p, x, y, regole[i], regole)
+			mappaColoriBlocco[piastrella{x, y}] = regole[i]
 
 			break
 		} else if !ok && i == len(regole)-1 {
@@ -296,67 +288,43 @@ func propagaGenerico(p piano, x, y int, blocco bool) {
 		}
 
 	}
-}
 
-func coloraBlocco(p piano, x, y int, regola regolaSingola, regole []regolaSingola) {
-	mappa := p.piastrelle
-	_, piastrelleBlocco := bloccoGenerico(p, x, y, false)
-
-	mappaColoriBlocco := make(map[piastrella]regolaSingola)
-
-	mappaColoriBlocco[piastrella{x, y}] = regola
-
-	for i := 1; i < len(piastrelleBlocco); i++ {
-		adiacenti := cercaAdiacenti(p, piastrelleBlocco[i])
-
-		for j := 0; j < len(regole); j++ {
-			rispettata := true
-
-			for l := 0; l < len(regole[j].addendi); l++ {
-				coeffBkcp := regole[j].addendi[l].coefficiente
-
-				for k := 0; k < len(adiacenti); k++ {
-					if (*mappa)[adiacenti[k]].colore == regole[j].addendi[l].colore {
-						coeffBkcp--
-					}
-				}
-
-				if coeffBkcp > 0 {
-					rispettata = false
-					break
-				}
-
-			}
-
-			if rispettata {
-				mappaColoriBlocco[piastrella{piastrelleBlocco[i].x, piastrelleBlocco[i].y}] = regole[j]
-				regole[j].consumo++
-
-				break
-			}
-		}
-
-	}
-
-	coloraPiastrelle(p, mappaColoriBlocco)
+	return mappaColoriBlocco
 }
 
 func coloraPiastrelle(p piano, mappaColoriBlocco map[piastrella]regolaSingola) {
-	mappa := p.piastrelle
+	piastrellePiano := p.piastrelle
 
 	for k, v := range mappaColoriBlocco {
-		val := (*mappa)[k]
+		val, ok := (*piastrellePiano)[k]
 
-		(*mappa)[k] = colorazione{val.coefficiente, v.coloreFinale}
+		if !ok {
+			(*piastrellePiano)[k] = colorazione{1, v.coloreFinale}
+		} else {
+			(*piastrellePiano)[k] = colorazione{val.coefficiente, v.coloreFinale}
+		}
 	}
 }
 
 func propaga(p piano, x, y int) {
-	propagaGenerico(p, x, y, false)
+	coloraPiastrelle(p, propagaGenerico(p, x, y))
 }
 
 func propagaBlocco(p piano, x, y int) {
-	propagaGenerico(p, x, y, true)
+	_, piastrelleBlocco := bloccoGenerico(p, x, y, false)
+	sliceCambiamenti := make([]map[piastrella]regolaSingola, 0)
+
+	for i := 0; i < len(piastrelleBlocco); i++ {
+		mapRis := propagaGenerico(p, piastrelleBlocco[i].x, piastrelleBlocco[i].y)
+
+		if len(mapRis) > 0 {
+			sliceCambiamenti = append(sliceCambiamenti, mapRis)
+		}
+	}
+
+	for j := 0; j < len(sliceCambiamenti); j++ {
+		coloraPiastrelle(p, sliceCambiamenti[j])
+	}
 }
 
 func ordina(p piano) {
