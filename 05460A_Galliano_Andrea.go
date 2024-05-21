@@ -4,7 +4,7 @@ import (
 	"bufio"
 	"fmt"
 	"os"
-	"sort"
+	"slices"
 	"strconv"
 	"strings"
 )
@@ -281,10 +281,12 @@ func propagaGenerico(p piano, x, y int, blocco bool) {
 		if rispettata && !blocco {
 			(*mappa)[piastrella{x, y}] = colorazione{val.coefficiente, regole[i].coloreFinale}
 
+			// fmt.Printf("usata regola %v\n", regole[i])
 			regole[i].consumo++
 
 			break
 		} else if rispettata && blocco && ok {
+			regole[i].consumo++
 			coloraBlocco(p, x, y, regole[i], regole)
 
 			break
@@ -330,6 +332,7 @@ func coloraBlocco(p piano, x, y int, regola regolaSingola, regole []regolaSingol
 			if rispettata {
 				mappaColoriBlocco[piastrella{piastrelleBlocco[i].x, piastrelleBlocco[i].y}] = regole[j]
 				regole[j].consumo++
+				// fmt.Printf("usata regola %v\n", regole[j])
 
 				break
 			}
@@ -361,7 +364,7 @@ func propagaBlocco(p piano, x, y int) {
 func ordina(p piano) {
 	regole := *p.regole
 
-	sort.SliceStable(regole, func(i, j int) bool {
-		return regole[i].consumo < regole[j].consumo
+	slices.SortStableFunc(regole, func(a, b regolaSingola) int {
+		return a.consumo - b.consumo
 	})
 }
