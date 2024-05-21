@@ -76,7 +76,7 @@ Le funzioni implementate all'interno del programma, fronte di un apposito input,
 La funzione **_colora_** riceve come parametri il **piano**, le coordinate intere **x** e **y**, un **colore** e l'**intensità** con cui si intende colorare la *piastrella*.  
 Per effettuare l'operazione di *colorazione*, assegno alla mappa contenente le *piastrelle* nel **piano** il valore della corrispondente **colorazione**.  
 - **Analisi del tempo**: l'accesso alla mappa ha costo *O(1)* in termini di tempo. 
-- **Analisi dello spazio**: non viene allocato alcuno spazio, di conseguenza il costo in termini di spazio è costante e nell'ordine di O(1).
+- **Analisi dello spazio**: non viene allocato alcuno spazio, di conseguenza il costo in termini di spazio è costante e nell'ordine di *O(1)*.
 
 #### Spegni
 La funzione **spegni** 
