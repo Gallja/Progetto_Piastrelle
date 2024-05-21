@@ -6,7 +6,18 @@
     - [Piano](#il-piano)
     - [Piastrelle](#le-piastrelle)
     - [Colorazione](#la-colorazione)
-    - [Regole di propagazione](#le-regole)
+    - [Regole di propagazione](#le-regole)  
+- [Le funzioni principali](#le-funzioni-principali)
+    - [Colora](#colora)
+    - [Spegni](#spegni)
+    - [Regola](#regola)
+    - [Stato](#stato)
+    - [Stampa](#stampa)
+    - [Blocco](#blocco)
+    - [Blocco Omogeneo](#blocco-omogeneo)
+    - [Propaga](#propaga)
+    - [Propaga Blocco](#propaga-blocco)
+    - [Ordina](#ordina)
 
 
 ## Introduzione
@@ -38,7 +49,7 @@ type piastrella struct {
 ```
 
 #### La colorazione
-Come abbiamo visto per la prima struttura, ogni **piastrella** accesa facente parte del **piano**, è necessario avere a disposizione 2 dati oltre le sue coordinate: l'*intensità* con cui è accesa nel **piano** ed il *colore*.  
+Come abbiamo visto per la prima struttura, per ogni **piastrella** accesa facente parte del **piano**, è necessario avere a disposizione 2 dati oltre le sue coordinate: l'*intensità* con cui è accesa nel **piano** ed il *colore*.  
 
 ```Go
 type colorazione struct {
@@ -48,7 +59,7 @@ type colorazione struct {
 ```
 
 #### Le regole
-Le **regole di propagazione** da applicare alle **piastrelle accese** nel **piano**, necessitano di 3 campi per poter essere rappresentate con una struttura: gli *addendi* che formano la regola, il *colore* che assume la **piastrella** dopo l'applicazione della regola ed il *consumo* (ovvero il numero di volte che la regola è stata applicata; questo campo permette di ordinare le regole in maniera non decrescente).  
+Le **regole di propagazione** da applicare alle **piastrelle accese** nel **piano**, necessitano di 3 campi per poter essere rappresentate con una struttura: gli *addendi* che formano la regola, il *colore* che assume la **piastrella** dopo l'applicazione della regola ed il *consumo* (ovvero il numero di volte che la regola è stata applicata; questo campo permette di **ordinare** le regole in maniera **non decrescente**).  
 
 ```Go
 type regolaSingola struct {
@@ -58,3 +69,37 @@ type regolaSingola struct {
 }
 ```
 
+### Le funzioni principali
+Le funzioni implementate all'interno del programma, fronte di un apposito input, permettono di modificare il piano e prestando particolare attenzioni all'uso delle risorse sia spaziali che temporali.  
+
+#### Colora
+La funzione **_colora_** riceve come parametri il **piano**, le coordinate intere **x** e **y**, un **colore** e l'**intensità** con cui si intende colorare la *piastrella*.  
+Per effettuare l'operazione di *colorazione*, assegno alla mappa contenente le *piastrelle* nel **piano** il valore della corrispondente **colorazione**.  
+- **Analisi del tempo**: l'accesso alla mappa ha costo *O(1)* in termini di tempo. 
+- **Analisi dello spazio**: non viene allocato alcuno spazio, di conseguenza il costo in termini di spazio è costante e nell'ordine di O(1).
+
+#### Spegni
+La funzione **spegni** 
+
+#### Regola
+
+
+#### Stato
+
+
+#### Stampa
+
+
+#### Blocco
+
+
+#### Blocco Omogeneo
+
+
+#### Propaga
+
+
+#### Propaga Blocco
+
+
+#### Ordina
