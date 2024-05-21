@@ -262,17 +262,17 @@ func propagaGenerico(p piano, x, y int, blocco bool) {
 		rispettata := true
 
 		for j := 0; j < len(regole[i].addendi); j++ {
-			coeffBkcp := regole[i].addendi[j].coefficiente
+			coeffAddendo := regole[i].addendi[j].coefficiente
 
-			for k := 0; k < len(adiacenti) && coeffBkcp > 0; k++ {
+			for k := 0; k < len(adiacenti) && coeffAddendo > 0; k++ {
 
 				if (*piastrellePiano)[adiacenti[k]].colore == regole[i].addendi[j].colore {
-					coeffBkcp--
+					coeffAddendo--
 				}
 
 			}
 
-			if coeffBkcp > 0 {
+			if coeffAddendo > 0 {
 				rispettata = false
 				break
 			}
