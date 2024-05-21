@@ -330,6 +330,8 @@ func coloraBlocco(p piano, x, y int, regola regolaSingola, regole []regolaSingol
 			if rispettata {
 				mappaColoriBlocco[piastrella{piastrelleBlocco[i].x, piastrelleBlocco[i].y}] = regole[j]
 				regole[j].consumo++
+
+				break
 			}
 		}
 
