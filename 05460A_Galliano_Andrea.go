@@ -247,9 +247,9 @@ func bloccoOmog(p piano, x, y int) int {
 }
 
 func propagaGenerico(p piano, x, y int, blocco bool) {
-	mappa := p.piastrelle
+	piastrellePiano := p.piastrelle
 	coefficiente := 1
-	val, ok := (*mappa)[piastrella{x, y}]
+	val, ok := (*piastrellePiano)[piastrella{x, y}]
 
 	if ok {
 		coefficiente = val.coefficiente
@@ -266,7 +266,7 @@ func propagaGenerico(p piano, x, y int, blocco bool) {
 
 			for k := 0; k < len(adiacenti) && coeffBkcp > 0; k++ {
 
-				if (*mappa)[adiacenti[k]].colore == regole[i].addendi[j].colore {
+				if (*piastrellePiano)[adiacenti[k]].colore == regole[i].addendi[j].colore {
 					coeffBkcp--
 				}
 
@@ -279,7 +279,7 @@ func propagaGenerico(p piano, x, y int, blocco bool) {
 		}
 
 		if rispettata && !blocco {
-			(*mappa)[piastrella{x, y}] = colorazione{coefficiente, regole[i].coloreFinale}
+			(*piastrellePiano)[piastrella{x, y}] = colorazione{coefficiente, regole[i].coloreFinale}
 
 			regole[i].consumo++
 
