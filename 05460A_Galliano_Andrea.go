@@ -248,11 +248,11 @@ func bloccoOmog(p piano, x, y int) int {
 
 func propagaGenerico(p piano, x, y int, blocco bool) {
 	mappa := p.piastrelle
+	coefficiente := 1
 	val, ok := (*mappa)[piastrella{x, y}]
 
-	if !ok {
-		colora(p, x, y, "", 1)
-		val = (*mappa)[piastrella{x, y}]
+	if ok {
+		coefficiente = val.coefficiente
 	}
 
 	adiacenti := cercaAdiacenti(p, piastrella{x, y})
@@ -279,9 +279,8 @@ func propagaGenerico(p piano, x, y int, blocco bool) {
 		}
 
 		if rispettata && !blocco {
-			(*mappa)[piastrella{x, y}] = colorazione{val.coefficiente, regole[i].coloreFinale}
+			(*mappa)[piastrella{x, y}] = colorazione{coefficiente, regole[i].coloreFinale}
 
-			// fmt.Printf("usata regola %v\n", regole[i])
 			regole[i].consumo++
 
 			break
@@ -332,7 +331,6 @@ func coloraBlocco(p piano, x, y int, regola regolaSingola, regole []regolaSingol
 			if rispettata {
 				mappaColoriBlocco[piastrella{piastrelleBlocco[i].x, piastrelleBlocco[i].y}] = regole[j]
 				regole[j].consumo++
-				// fmt.Printf("usata regola %v\n", regole[j])
 
 				break
 			}
