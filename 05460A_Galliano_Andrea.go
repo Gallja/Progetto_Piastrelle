@@ -248,7 +248,6 @@ func bloccoOmog(p piano, x, y int) int {
 
 func propagaGenerico(p piano, x, y int) map[piastrella]regolaSingola {
 	piastrellePiano := p.piastrelle
-	_, ok := (*piastrellePiano)[piastrella{x, y}]
 	mappaColoriBlocco := make(map[piastrella]regolaSingola)
 
 	adiacenti := cercaAdiacenti(p, piastrella{x, y})
@@ -281,29 +280,11 @@ func propagaGenerico(p piano, x, y int) map[piastrella]regolaSingola {
 			mappaColoriBlocco[piastrella{x, y}] = regole[i]
 
 			break
-		} else if !ok && i == len(regole)-1 {
-			spegni(p, x, y)
-
-			break
 		}
 
 	}
 
 	return mappaColoriBlocco
-}
-
-func coloraPiastrelle(p piano, mappaColoriBlocco map[piastrella]regolaSingola) {
-	piastrellePiano := p.piastrelle
-
-	for k, v := range mappaColoriBlocco {
-		val, ok := (*piastrellePiano)[k]
-
-		if !ok {
-			(*piastrellePiano)[k] = colorazione{1, v.coloreFinale}
-		} else {
-			(*piastrellePiano)[k] = colorazione{val.coefficiente, v.coloreFinale}
-		}
-	}
 }
 
 func propaga(p piano, x, y int) {
@@ -324,6 +305,20 @@ func propagaBlocco(p piano, x, y int) {
 
 	for j := 0; j < len(sliceCambiamenti); j++ {
 		coloraPiastrelle(p, sliceCambiamenti[j])
+	}
+}
+
+func coloraPiastrelle(p piano, mappaColoriBlocco map[piastrella]regolaSingola) {
+	piastrellePiano := p.piastrelle
+
+	for k, v := range mappaColoriBlocco {
+		val, ok := (*piastrellePiano)[k]
+
+		if !ok {
+			(*piastrellePiano)[k] = colorazione{1, v.coloreFinale}
+		} else {
+			(*piastrellePiano)[k] = colorazione{val.coefficiente, v.coloreFinale}
+		}
 	}
 }
 
