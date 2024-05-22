@@ -169,8 +169,8 @@ func bloccoGenerico(p piano, x, y int, omogeneo bool) (int, []piastrella) {
 	start, ok := (*piastrelleInPiano)[piastrella{x, y}]
 	sommaIntensita := 0
 
-	sliceRet := []piastrella{}
-	sliceRet = append(sliceRet, piastrella{x, y})
+	piastrelleBlocco := []piastrella{}
+	piastrelleBlocco = append(piastrelleBlocco, piastrella{x, y})
 
 	// piastrella spenta
 	if !ok {
@@ -200,7 +200,7 @@ func bloccoGenerico(p piano, x, y int, omogeneo bool) (int, []piastrella) {
 
 				if !omogeneo || val.colore == start.colore {
 					sommaIntensita += val.coefficiente
-					sliceRet = append(sliceRet, adiacenti[i])
+					piastrelleBlocco = append(piastrelleBlocco, adiacenti[i])
 					coda.enqueue(adiacenti[i])
 				}
 			}
@@ -209,7 +209,7 @@ func bloccoGenerico(p piano, x, y int, omogeneo bool) (int, []piastrella) {
 
 	}
 
-	return sommaIntensita, sliceRet
+	return sommaIntensita, piastrelleBlocco
 }
 
 func cercaAdiacenti(p piano, piastrella_ piastrella) []piastrella {
@@ -312,9 +312,9 @@ func coloraPiastrelle(p piano, piastrelleRegole map[piastrella]regolaSingola) {
 		val, ok := (*piastrelleInPiano)[k]
 
 		if !ok {
-			(*piastrelleInPiano)[k] = colorazione{1, v.coloreFinale}
+			colora(p, k.x, k.y, v.coloreFinale, 1)
 		} else {
-			(*piastrelleInPiano)[k] = colorazione{val.coefficiente, v.coloreFinale}
+			colora(p, k.x, k.y, v.coloreFinale, val.coefficiente)
 		}
 	}
 }
