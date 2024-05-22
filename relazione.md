@@ -150,7 +150,7 @@ Ciò che fa la funzione, a livello di codice, è *scorrere la slice di regole de
 
 - **Analisi del tempo**: Questa funzione contiene 2 cicli: il primo scorre le **regole** nel **piano**, mentre il secondo scorre gli **addendi** di ogni regola. Il primo ciclo ha complessità **_O(n)_** (con *n = numero di regole nel piano*) ed il secondo effettua sempre, al più, 8 iterazioni (questo perché, per definizione del piano e dell'intorno di ogni piastrella con *max piastrelle circonvicine = 8*, **una regola di propagazione non può avere più di 8 addendi**).  
 Di conseguenza, la complessità temporale totale della funzione **stampa** è pari a **_O(n) x O(8)_ = O(n)**.  
-- **Analisi dello spazio**:   
+- **Analisi dello spazio**: La complessità spaziale di questa funzione di stampa è **_O(1)_**.  
 
 
 #### Blocco
@@ -201,7 +201,12 @@ visitate := make(map[piastrella]struct{})
 Questa mappa, **da piastrella a struct vuota**, permette di memorizzare solo le chiavi, in modo tale da trattare la struttura dati come un vero e proprio *set di piastrelle già visitate durante la BFS*.  
 Viene utilizzata una *struct vuota* al posto di una *variabile di tipo bool* **per poter risparmiare ulteriormente spazio in memoria**.  
 
-- **Analisi del tempo**: 
+- **Analisi del tempo**: Questa funzione, oltre alle istruzioni di tempo costante nell'ordine di **_O(1)_**, ha le seguenti operazioni rilevanti per la stima dei costi temporali:  
+    1. La funzione **_"enqueue"_**: la coda, grazie al campo con il puntatore a **_tail_**, permette di effettuare l'accodamento in tempo costante **_O(1)_**.  
+    2. La **_ricerca degli adiacenti_**: per ogni piastrella, questa ricerca comporta, nel caso peggiore, 8 iterazioni; a questo punto, è possibile concludere che la complessità temporale dell'operazione è **_O(8)_**.  
+    3. La **_BFS_**: la *ricerca in ampiezza* presenta 2 cicli: il primo che si interrompe quando *la coda è vuota*, il secondo che *scorre tutte le piastrelle circonvicine all'elemento corrente della coda*. La complessità è dunque **_O(n + m)_**, dove **_n = insieme di vertici nel grafo/insieme di piastrelle del blocco_** e **_m = archi che collegano i vertici_**.  
+
+Concludendo, la complessità temporale di **blocco** è **_O(n + m)_**.  
 - **Analisi dello spazio**: 
 
 #### Blocco Omogeneo
@@ -223,7 +228,7 @@ func bloccoGenerico(p piano, x, y int, omogeneo bool) (int, []piastrella) {
 ```
 
 A questo punto, è facile dedurre che le prestazioni riguardanti il *tempo*, che quelle riguardanti lo *spazio* non variano rispetto alla funzione **_blocco_**.
-- **Analisi del tempo**: 
+- **Analisi del tempo**: Complessità temporale nell'ordine di **_O(n + m)_**.
 - **Analisi dello spazio**: 
 
 #### Propaga
