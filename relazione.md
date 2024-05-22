@@ -120,8 +120,8 @@ func stato(p piano, x int, y int) (string, int) {
 ```
 La funzione **stato** *restituisce e stampa i valori relativi al colore e l'intensità della piastrella delle coordinate avute per argomento*.  
 Per farlo, assegno ad una variabile il valore della mappa contenente le piastrelle del piano e un'altra, di tipo *bool*, per stampare (e, conseguentemente, anche ritornare) **se e solo se quella piastrella esiste nel piano**.  
-- **Analisi del tempo**:   
-- **Analisi dello spazio**: 
+- **Analisi del tempo**: Dal punto di vista del tempo, questa funzione è nell'ordine di **_O(1)_**, poiché tutte le operazioni che effettua (ovvero la restituzione di un valore della *mappa di piastrelle*, di un valore *bool* che indichi se quel valore esiste, il controllo prima della stmpa e il ritorno finale di **colore** e **intensità** della piastrella) impiegano tempo costante.  
+- **Analisi dello spazio**: Anche lo spazio allocato, a livello di variabili dichiarate e memoria utilizzata, da parte di **stato** è nell'ordine di **_O(1)_**.
 
 
 #### Stampa
@@ -131,16 +131,21 @@ func stampa(p piano) {
     // implementazione di "stampa"
 }
 ```
+
 La funzione **stampa** mostra tutte le **regole** del **piano** nel seguente formato:  
-(  
-*coloreFinale: coefficiente1 colore1 coefficiente2 colore2 ...*  
-*coloreFinale: coefficiente1 colore1 coefficiente2 colore2 ...*  
+(    
+*coloreFinale 1: coefficiente1 colore1 coefficiente2 colore2 ...*  
+*coloreFinale 2: coefficiente1 colore1 coefficiente2 colore2 ...*  
 .  
 .  
 .  
+*coloreFinale n: coefficiente1 colore1 coefficiente2 colore2 ...*  
 )  
-- **Analisi del tempo**:  
-- **Analisi dello spazio**:  
+Ciò che fa la funzione, a livello di codice, è *scorrere la slice di regole del **piano** e, per ognuna di essere scorrere gli addendi che la compongono stampando infine il coefficiente ed il colore dell'addendo* (separando opportunamente entrambi con uno spazio).
+
+- **Analisi del tempo**: Questa funzione contiene 2 cicli: il primo scorre le **regole** nel **piano**, mentre il secondo scorre gli **addendi** di ogni regola. Il primo ciclo ha complessità **_O(n)_** (con *n = numero di regole nel piano*) ed il secondo effettua sempre, al più, 8 iterazioni (questo perché, per definizione del piano e dell'intorno di ogni piastrella con *max piastrelle circonvicine = 8*, **una regola di propagazione non può avere più di 8 addendi**).  
+Di conseguenza, la complessità temporale totale della funzione **stampa** è pari a **_O(n) x O(8)_ = O(n)**.  
+- **Analisi dello spazio**:   
 
 
 #### Blocco
@@ -150,6 +155,49 @@ func blocco(p piano, x, y int) {
     // implementazione di "blocco"
 }
 ```
+
+La funzione **blocco** stampa la somma delle intensità delle piastrelle facenti parte del medesimo blocco; per poterlo fare con complessità spaziali e temporali contenute, è stato necessario partire dalle coordinate **_(x, y)_** di una piastrella avuta per argomento per poi _effettuare una **visita in ampiezza ("Breadth-First-Search")** ed avere a disposizione le piastrelle circonvicine del blocco_.  
+
+La ricerca degli adiacenti o delle piastrelle circonvicine ad un'altra, le cui coordinate **_(x, y)_** sono passate per argomento ad un'apposita funzione **_"cercaAdiacenti"_**, non fa altro che _scorrere tutte le possibili **8 combinazioni** di coordinate di piastrelle circonvicine per poi restituirle all'interno di una slice_.
+
+```Go
+func cercaAdiacenti(p piano, piastrella_ piastrella) []piastrella {
+    // le 8 combinazioni possibili per ogni piastrella:
+    combX := []int{-1, 0, 0, 1, -1, -1, 1, 1}
+	combY := []int{-1, -1, 1, -1, 1, 0, 0, 1}
+
+    // implementazione di "cercaAdiacenti"
+}
+```
+
+Per effettuare la *visita in ampiezza*, è stata inoltre utilizzata una **coda**, in cui vengono salvate temporaneamente le piastrelle visitate e dalle quali si andrà a visitarne le circonvicine.  
+La struttura dati **coda**, con campi e funzioni scritte all'interno di un file a parte chiamato **_"queue.go"_**, è definita così:  
+
+```Go
+type queue struct {
+	head *queueNode
+	tail *queueNode
+}
+
+type queueNode struct {
+	next  *queueNode
+	value piastrella
+}
+```
+La memorizzazione di **_tail_** è particolarmente utile all'interno della funzione di **_enqueue_**, poiché permette di _**NON** scorrere tutta la coda per aggiungere un elemento, ma di avere direttamente un puntatore all'ultimo nodo ed effettuare l'aggiunta risparmiando in termini di complessità temporale_.  
+
+Verrà tenuto conto delle piastrelle già visitate salvandole permanentemente all'interno di una **mappa usata come _set_**.  
+Dato che, però, all'interno del linguaggio **Go** _non esiste **"Set"** come vero e proprio tipo_, ecco come è stato realizzato:  
+
+```Go
+visitate := make(map[piastrella]struct{})
+```
+
+Questa mappa, **da piastrella a struct vuota**, permette di memorizzare solo le chiavi, in modo tale da trattare la struttura dati come un vero e proprio *set di piastrelle già visitate durante la BFS*.  
+Viene utilizzata una *struct vuota* al posto di una *variabile di tipo bool* **per poter risparmiare ulteriormente spazio in memoria**.  
+
+- **Analisi del tempo**: 
+- **Analisi dello spazio**: 
 
 #### Blocco Omogeneo
 
