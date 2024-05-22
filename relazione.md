@@ -34,7 +34,7 @@ Il secondo campo della struttura è invece il *puntatore all'indirizzo di una sl
 ```Go
 type piano struct {
     piastrelle *map[piastrella]colorazione
-	regole     *[]regolaSingola
+    regole     *[]regolaSingola
 }
 ```
 
@@ -54,7 +54,7 @@ Come abbiamo visto per la prima struttura, per ogni **piastrella** accesa facent
 ```Go
 type colorazione struct {
     coefficiente int
-    colore string
+    colore       string
 }
 ```
 
@@ -63,9 +63,9 @@ Le **regole di propagazione** da applicare alle **piastrelle accese** nel **pian
 
 ```Go
 type regolaSingola struct {
-    addendi []colorazione
+    addendi      []colorazione
     coloreFinale string
-    consumo int
+    consumo      int
 }
 ```
 
