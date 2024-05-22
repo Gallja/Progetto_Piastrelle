@@ -241,13 +241,13 @@ func propaga(p piano, x, y int) {
 
 La funzione **propaga** permette di applicare ad una piastrella, le cui coordinate **_(x,y)_** vengono passate per argomento, _la prima **regola di propagazione** disponibile dell'elenco di regole nel **piano**_.  
 Ciò che viene fatto dalla funzione è seguire i seguenti passaggi:  
-1. Cercare le piastrelle circonvicine a quella avuta per argomento (utilizzando, come per **blocco** e **bloccoOmog** una **_ricerca in ampiezza_**);  
-2. Scorrere tutte le **regole di propagazione** del **piano**;  
-3. Scorrere tutti gli **addendi** della *regola corrente*;  
-4. Scorrere tutti gli **adiacenti** trovati nel punto 1;  
-5. Se le piastrelle adiacenti rispettano una **regola di propagazione**, *ne viene incrementato il consumo e salvata sia la piastrella a cui applicare la regola che la regola stessa*;
-6. Infine, se nel punto precedente è stato salvato qualcosa, viene effettuata la colorazione della piastrella (con intensità = 1 nel caso in cui fosse stata spenta, oppure con l'intensità invariata rispetto a com'era prima della chiamata di **propaga**).  
-- **Analisi del tempo**: 
+1. Cercare le piastrelle circonvicine a quella avuta per argomento (utilizzando, come per **blocco** e **bloccoOmog** una **_ricerca in ampiezza_**): **_O(8)_**;  
+2. Scorrere tutte le **regole di propagazione** del **piano**: **_O(n)_**, dove **_n = numero di regole nel piano_**;  
+3. Scorrere tutti gli **addendi** della *regola corrente*: **_O(8)_**, non è possibile avere più di 8 addendi a regola;  
+4. Scorrere tutti gli **adiacenti** trovati nel punto 1: **_O(m)_**, con **_m = numero di piastrelle circonvicine a quella avuta per argomento_**;  
+5. Se le piastrelle adiacenti rispettano una **regola di propagazione**, *ne viene incrementato il consumo e salvata sia la piastrella a cui applicare la regola che la regola stessa*: operazione che impiega tempo costante, quindi **_O(1)_**;
+6. Infine, se nel punto precedente è stato salvato qualcosa, viene effettuata la colorazione della piastrella (con intensità = 1 nel caso in cui fosse stata spenta, oppure con l'intensità invariata rispetto a com'era prima della chiamata di **propaga**): **_O(k)_**, dove **_k = numero di elementi all'interno della mappa che contiene le piastrelle del piano_**.  
+- **Analisi del tempo**: Avendo analizzato tutte le macro-operazioni svolte da **propaga**, è possibile dedurre che i costi temporali sono nell'ordine di **_O(n * m) + O(k)_**.  
 - **Analisi dello spazio**: 
 
 #### Propaga Blocco
