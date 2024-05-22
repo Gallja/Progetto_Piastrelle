@@ -568,5 +568,12 @@ Per vedere in maniera completa come cambia il **piano**, a fronte del *file di i
 
 #### Esempi lunghi
 Oltre agli esempi riportati sopra, vi sono 2 esempi che testano in particolare le performance del programma per effettuare una stima qualitativa delle prestazioni.  
-In particolare, i file **_inputLungo1.in_** e **_inputLungo2.in_** producono correttamente il proprio output nei seguenti tempi:  
+In particolare, i file **_inputLungo1.in_** e **_inputLungo2.in_**, formati da milioni di righe, producono correttamente il proprio output nei seguenti tempi:  
 
+File **_"inputLungo1.in"_**:  
+
+![Tempo inputLungo1](img/tempoEsempio1.png)
+
+File **_inputLungo2.in_**:  
+
+![Tempo inputLungo2](img/tempoEsempio2.png)
