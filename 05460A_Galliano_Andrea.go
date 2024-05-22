@@ -213,7 +213,7 @@ func bloccoGenerico(p piano, x, y int, omogeneo bool) (int, []piastrella) {
 }
 
 func cercaAdiacenti(p piano, piastrella_ piastrella) []piastrella {
-	sliceRet := []piastrella{}
+	circonvicine := []piastrella{}
 	piastrelleInPiano := p.piastrelle
 
 	// le 8 combinazioni possibili per ogni piastrella:
@@ -224,11 +224,11 @@ func cercaAdiacenti(p piano, piastrella_ piastrella) []piastrella {
 		_, ok := (*piastrelleInPiano)[piastrella{piastrella_.x + combX[i], piastrella_.y + combY[i]}]
 
 		if ok {
-			sliceRet = append(sliceRet, piastrella{piastrella_.x + combX[i], piastrella_.y + combY[i]})
+			circonvicine = append(circonvicine, piastrella{piastrella_.x + combX[i], piastrella_.y + combY[i]})
 		}
 	}
 
-	return sliceRet
+	return circonvicine
 }
 
 func blocco(p piano, x, y int) {
