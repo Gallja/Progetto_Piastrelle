@@ -117,21 +117,21 @@ func spegni(p piano, x int, y int) {
 func regola(p piano, r string) {
 	args := strings.Split(r, " ")
 
-	var newReg regolaSingola
-	newReg.consumo = 0
-	newReg.coloreFinale = args[0]
-	addReg := colorazione{}
+	var nuovaRegola regolaSingola
+	nuovaRegola.consumo = 0
+	nuovaRegola.coloreFinale = args[0]
+	addendoRegola := colorazione{}
 
 	for i := 1; i < len(args); i++ {
-		if i%2 != 0 { // è un colore
-			addReg.coefficiente, _ = strconv.Atoi(args[i])
-		} else { // è un valore intero
-			addReg.colore = args[i]
-			newReg.addendi = append(newReg.addendi, addReg)
+		if i%2 != 0 { // è un valore intero
+			addendoRegola.coefficiente, _ = strconv.Atoi(args[i])
+		} else { // è un colore
+			addendoRegola.colore = args[i]
+			nuovaRegola.addendi = append(nuovaRegola.addendi, addendoRegola)
 		}
 	}
 
-	*p.regole = append(*(p.regole), newReg)
+	*p.regole = append(*(p.regole), nuovaRegola)
 }
 
 func stato(p piano, x int, y int) (string, int) {
