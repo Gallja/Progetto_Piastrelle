@@ -68,11 +68,9 @@ func esegui(p piano, s string) {
 		case "s":
 			stampa(p)
 		case "b":
-			sommaIntensita := blocco(p, x, y)
-			fmt.Println(sommaIntensita)
+			blocco(p, x, y)
 		case "B":
-			sommaIntensita := bloccoOmog(p, x, y)
-			fmt.Println(sommaIntensita)
+			bloccoOmog(p, x, y)
 		case "p":
 			propaga(p, x, y)
 		case "P":
@@ -233,16 +231,16 @@ func cercaAdiacenti(p piano, piastrella_ piastrella) []piastrella {
 	return sliceRet
 }
 
-func blocco(p piano, x, y int) int {
+func blocco(p piano, x, y int) {
 	sommaIntensita, _ := bloccoGenerico(p, x, y, false)
 
-	return sommaIntensita
+	fmt.Println(sommaIntensita)
 }
 
-func bloccoOmog(p piano, x, y int) int {
+func bloccoOmog(p piano, x, y int) {
 	sommaIntensita, _ := bloccoGenerico(p, x, y, true)
 
-	return sommaIntensita
+	fmt.Println(sommaIntensita)
 }
 
 func propagaGenerico(p piano, x, y int) map[piastrella]regolaSingola {
