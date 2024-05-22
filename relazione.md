@@ -19,6 +19,10 @@
     - [Propaga Blocco](#propaga-blocco)
     - [Ordina](#ordina)
 - [Esempi di esecuzione](#esempi-di-esecuzione)
+    - [Esempio piano 1](#esempio-piano-1)
+    - [Esempio piano 2](#esempio-piano-2)
+    - [Esempio piano 3](#esempio-piano-3)
+    - [Esempi lunghi](#esempi-lunghi)
 
 
 ## Introduzione
@@ -230,8 +234,16 @@ func propaga(p piano, x, y int) {
 }
 ```
 
-La funzione **propaga** permette di applicare, ad una piastrella le cui coordinate **_(x,y)_** vengono passate per argomento, _la prima **regola di propagazione** disponibile dell'elenco di regole nel **piano**_.  
-Ciò che viene fatto è 
+La funzione **propaga** permette di applicare ad una piastrella, le cui coordinate **_(x,y)_** vengono passate per argomento, _la prima **regola di propagazione** disponibile dell'elenco di regole nel **piano**_.  
+Ciò che viene fatto dalla funzione è seguire i seguenti passaggi:  
+1. Cercare le piastrelle circonvicine a quella avuta per argomento (utilizzando, come per **blocco** e **bloccoOmog** una **_ricerca in ampiezza_**);  
+2. Scorrere tutte le **regole di propagazione** del **piano**;  
+3. Scorrere tutti gli **addendi** della *regola corrente*;  
+4. Scorrere tutti gli **adiacenti** trovati nel punto 1;  
+5. Se le piastrelle adiacenti rispettano una **regola di propagazione**, *ne viene incrementato il consumo e salvata sia la piastrella a cui applicare la regola che la regola stessa*;
+6. Infine, se nel punto precedente è stato salvato qualcosa, viene effettuata la colorazione della piastrella (con intensità = 1 nel caso in cui fosse stata spenta, oppure con l'intensità invariata rispetto a com'era prima della chiamata di **propaga**).  
+- **Analisi del tempo**: 
+- **Analisi dello spazio**: 
 
 #### Propaga Blocco
 
@@ -241,6 +253,19 @@ func propagaBlocco(p piano, x, y int) {
 }
 ```
 
+La funzione **propagaBlocco** segue lo stesso principio di funzionamento di **propaga**, con la sola differenza che _**TUTTE** le piastrelle del blocco a cui appartiene le piastrella di partenza vengono analizzate per stabilire se applicarvi o meno una **regola** in base all'attuale ordinamento_.  
+Come fatto per **blocco** e **bloccoOmog** le operazioni comuni di **propaga** e **propagaBlocco** sono racchiuse all'interno della stessa funzione, chiamata **propagaGenerico**.  
+
+```Go
+func propagaGenerico(p piano, x, y int) map[piastrella]regolaSingola {
+    // implementazione di "propagaGenerico"
+}
+```
+
+L'analisi dei costi di **propagaBlocco** è però leggermente diversa rispetto a **propaga**.  
+- **Analisi del tempo**: 
+- **Analisi dello spazio**: 
+
 #### Ordina
 
 ```Go
@@ -249,11 +274,22 @@ func ordina(p piano) {
 }
 ```
 
-La funzione **ordina** permette di _ordinare le **regole di propagazione** del **piano** in ordine **non decrescente** in base al consumo delle regole stesse_. Per fare l'ordinamento, è stata utilizzata la funzione di libreria di **Go** [SortStableFunc](https://pkg.go.dev/slices#SortStableFunc), che permette di ordinare **in maniera stabile** riscrivendo il **comparatore** per confrontare gli elementi di una slice allo stesso modo della funzione [SortFunc](https://pkg.go.dev/slices#SortFunc).  
+La funzione **ordina** permette di _ordinare le **regole di propagazione** del **piano** in ordine **non decrescente** in base al consumo delle regole stesse_. Per fare l'ordinamento, è stata utilizzata la funzione di libreria di **Go** [SortStableFunc](https://pkg.go.dev/slices#SortStableFunc), che permette di ordinare **in maniera stabile** riscrivendo il **comparatore** per confrontare gli elementi di una slice in modo analogo rispetto alla funzione [SortFunc](https://pkg.go.dev/slices#SortFunc).  
 
 - **Analisi del tempo**: L'ordinamento delle regole in base al loro consumo è basato su confronti e, nel caso peggiore, non si può scendere al di sotto dell'ordine di **_O(n log n)_**.
 - **Analisi dello spazio**: Essendo un algoritmo di ordinamento **_in-place_**, non utilizza spazio ulteriore per la creazione di copie di slice, di conseguenza la funzione **ordina** utilizza solo un **puntatore alla slice da ordinare** ed è nell'ordine di **_O(1)_**.  
 
 ### Esempi di esecuzione
-Per testare il corretto funzionamento del programma e le sue prestazioni, sono stati scritti ulteriori _file di input_ con i relativi _file di output_.  
-Per questi esempi è stata inoltre creata una griglia per avere una **visualizzazione grafica** del piano per capire come viene modificato a fronte dei comandi in input.
+Per testare il corretto funzionamento del programma e le sue prestazioni, oltre all'esempio fornito dalla traccia, sono stati scritti ulteriori _file di input_ con i relativi _file di output_.  
+Per questi esempi è stata inoltre creata una griglia per avere una **visualizzazione grafica** del piano per capire come viene modificato a fronte dei comandi in input.  
+
+#### Esempio piano 1
+
+
+#### Esempio piano 2
+
+
+#### Esempio piano 3
+
+
+#### Esempi lunghi
