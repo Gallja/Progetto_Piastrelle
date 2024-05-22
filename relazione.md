@@ -121,7 +121,7 @@ func stato(p piano, x int, y int) (string, int) {
 La funzione **stato** *restituisce e stampa i valori relativi al colore e l'intensità della piastrella delle coordinate avute per argomento*.  
 Per farlo, assegno ad una variabile il valore della mappa contenente le piastrelle del piano e un'altra, di tipo *bool*, per stampare (e, conseguentemente, anche ritornare) **se e solo se quella piastrella esiste nel piano**.  
 - **Analisi del tempo**:   
-- **Analisi dello spazio**:
+- **Analisi dello spazio**: 
 
 
 #### Stampa
@@ -131,12 +131,22 @@ func stampa(p piano) {
     // implementazione di "stampa"
 }
 ```
+La funzione **stampa** mostra tutte le **regole** del **piano** nel seguente formato:  
+(  
+*coloreFinale: coefficiente1 colore1 coefficiente2 colore2 ...*  
+*coloreFinale: coefficiente1 colore1 coefficiente2 colore2 ...*  
+.  
+.  
+.  
+)  
+- **Analisi del tempo**:  
+- **Analisi dello spazio**:  
 
 
 #### Blocco
 
 ```Go
-func blocco(p piano, x, y int) int {
+func blocco(p piano, x, y int) {
     // implementazione di "blocco"
 }
 ```
@@ -144,7 +154,7 @@ func blocco(p piano, x, y int) int {
 #### Blocco Omogeneo
 
 ```Go
-func bloccoOmog(p piano, x, y int) int {
+func bloccoOmog(p piano, x, y int) {
     // implementazione di "bloccoOmog"
 }
 ```
