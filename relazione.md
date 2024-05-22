@@ -164,7 +164,7 @@ La ricerca degli adiacenti o delle piastrelle circonvicine ad un'altra, le cui c
 func cercaAdiacenti(p piano, piastrella_ piastrella) []piastrella {
     // le 8 combinazioni possibili per ogni piastrella:
     combX := []int{-1, 0, 0, 1, -1, -1, 1, 1}
-	combY := []int{-1, -1, 1, -1, 1, 0, 0, 1}
+    combY := []int{-1, -1, 1, -1, 1, 0, 0, 1}
 
     // implementazione di "cercaAdiacenti"
 }
