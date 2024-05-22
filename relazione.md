@@ -207,6 +207,10 @@ func bloccoOmog(p piano, x, y int) {
 }
 ```
 
+La funzione **bloccoOmog** _stampa la somma delle intensità delle piastrelle circonvicine facenti parte dello stesso blocco, utilizzando lo stesso principio di funzionamento della funzione **blocco**_.  
+- **Analisi del tempo**: 
+- **Analisi dello spazio**: 
+
 #### Propaga
 
 ```Go
