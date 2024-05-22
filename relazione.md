@@ -489,6 +489,16 @@ Tabella di **input/output**:
 
 
 #### Esempio piano 3
+Il terzo esempio ha lo scopo di testare in particolare le funzioni **propaga** e **propagaBlocco** dopo aver ordinato più volte le regole del **piano** attraverso la funzione **ordina**.  
+
+![Esempio 3](img/esempio3.png)
+
+Nell'immagine d'esempio vengono riportate solo le prime 2 *propagazioni*, poiché le altre vengono effettuate in seguito a più ordinamenti delle regole.  
+Per vedere in maniera completa come cambia il **piano**, a fronte del *file di input*, ecco la tabella:  
+
 
 
 #### Esempi lunghi
+Oltre agli esempi riportati sopra, vi sono 2 esempi che testano in particolare le performance del programma per effettuare una stima qualitativa delle prestazioni.  
+In particolare, i file **_inputLungo1.in_** e **_inputLungo2.in_** producono correttamente il proprio output nei seguenti tempi:  
+
