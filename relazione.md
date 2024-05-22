@@ -284,7 +284,96 @@ Per testare il corretto funzionamento del programma e le sue prestazioni, oltre 
 Per questi esempi è stata inoltre creata una griglia per avere una **visualizzazione grafica** del piano per capire come viene modificato a fronte dei comandi in input.  
 
 #### Esempio piano 1
+Per il primo esempio, il **piano** è composto dalle seguenti piastrelle e le seguenti **regole**:  
 
+![Esempio 1](img/esempio1.png)
+
+I numeri e le frecce in bianco fanno riferimento alle regole applicate a quella piastrella, mentre le scritte (in blu) di fianco alle regole di propagazione indicano se viene applicato il comando per la chiamata della funzione **propaga** (p) o **propagaBlocco** (P).  
+
+| INPUT          | OUTPUT        |
+|----------------|---------------|
+|C 0 0 r 1       |               |
+|C 1 1 r 1       |               |
+|C 2 2 g 1       |               |
+|C 1 3 w 1       |               |
+|C 3 2 y 1       |               |
+|C 7 3 y 1       |               |
+|C 9 0 v 1       |               |
+|C 10 0 v 1      |               |
+|C 11 0 g 1      |               |
+|C 12 0 b 1      |               |
+|C 4 5 b 1       |               |
+|C 2 6 g 1       |               |
+|C 3 6 b 1       |               |
+|C 2 7 b 1       |               |
+|C 1 8 g 1       |               |
+|C 3 8 g 1       |               |
+|C 2 9 r 1       |               |
+|C 1 11 y 1      |               |
+|C 2 11 r 1      |               |
+|C 3 11 y 1      |               |
+|C 7 7 g 1       |               |
+|C 6 8 g 1       |               |
+|C 7 9 r 1       |               |
+|C 8 9 v 1       |               |
+|C 6 10 w 1      |               |
+|C 6 11 w 1      |               |
+|C 5 12 v 1      |               |
+|C 11 9 w 1      |               |
+|C 10 10 v 1     |               |
+|C 11 10 g 1     |               |
+|C 10 11 b 1     |               |
+|C 11 11 r 1     |               |
+|C 11 3 r 1      |               |
+|C 11 4 r 1      |               |
+|C 11 5 r 1      |               |
+|C 11 6 v 1      |               |
+|b 0 0           |5              |
+|b 7 3           |1              |
+|b 5 12          |7              |
+|b 9 0           |4              |
+|B 9 0           |2              |
+|B 11 4          |3              |
+|B 6 9           |0              |
+|B 0 0           |2              |
+|r f 2 g 1 b     |               |
+|r z 1 g 1 w     |               |
+|r h 1 v 1 g 1 b |               |
+|r e 1 v 2 w     |               |
+|r k 2 g 1 v     |               |
+|r d 1 v 1 r     |               |
+|s               |(              |
+|                |f: 2 g 1 b     |
+|                |z: 1 g 1 w     |
+|                |h: 1 v 1 g 1 b |
+|                |e: 1 v 2 w     |
+|                |k: 2 g 1 v     |
+|                |d: 1 v 1 r     |
+|                |)              |
+|p 1 7           |               |
+|p 2 8           |               |
+|P 10 9          |               |
+|p 11 1          |               |
+|p 5 11          |               |
+|p 7 10          |               |
+|p 7 8           |               |
+|P 11 5          |               |
+|? 1 7           |f 1            |
+|? 10 9          |w 1            |
+|? 11 9          |v 1            |
+|? 10 10         |g 1            |
+|? 11 10         |b 1            |
+|? 10 11         |r 1            |
+|? 11 11         |h 1            |
+|? 11 1          |e 1            |
+|? 5 11          |k 1            |
+|? 7 8           |v 1            |
+|? 11 6          |d 1            |
+|? 11 5          |r 1            |
+|? 11 4          |r 1            |
+|? 11 3          |               |
+|o               |               |
+|q               |               |
 
 #### Esempio piano 2
 
