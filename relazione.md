@@ -381,7 +381,7 @@ Il secondo esempio è invece formato dalle seguenti piastrelle nel piano:
 ![Esempio 2](img/esempio2.png)
 
 Tabella di **input/output**:  
-| Input                                  | Output             |
+| INPUT                                  | OUTPUT             |
 |----------------------------------------|--------------------|
 | C 1 13 h 1                             |                    |
 | C 2 12 v 1                             |                    |
@@ -496,6 +496,74 @@ Il terzo esempio ha lo scopo di testare in particolare le funzioni **propaga** e
 Nell'immagine d'esempio vengono riportate solo le prime 2 *propagazioni*, poiché le altre vengono effettuate in seguito a più ordinamenti delle regole.  
 Per vedere in maniera completa come cambia il **piano**, a fronte del *file di input*, ecco la tabella:  
 
+| INPUT           | OUTPUT         |
+|-----------------|----------------|
+| C 0 0 g 1       |                |
+| C 0 2 g 1       |                |
+| C 1 1 g 1       |                |
+| C 1 3 g 1       |                |
+| C 1 4 g 1       |                |
+| C 2 0 g 1       |                |
+| C 2 2 g 1       |                |
+| C 3 0 g 1       |                |
+| C 3 1 g 1       |                |
+| C 3 2 g 1       |                |
+| C 3 4 g 1       |                |
+| C 4 4 g 1       |                |
+| r z 2 g 1 b     |                |
+| r w 1 g 2 b     |                |
+| r y 1 b 1 r     |                |
+| r g 2 b 1 r     |                |
+| r t 1 b 1 g 1 r |                |
+| b 0 0           | 10             |
+| b 2 2           | 10             |
+| b 1 4           | 10             |
+| b 4 4           | 2              |
+| b 3 4           | 2              |
+| B 0 0           | 2              |
+| B 2 0           | 2              |
+| B 4 4           | 2              |
+| B 3 4           | 2              |
+| s               | (              |
+|                 | z: 2 g 1 b     |
+|                 | w: 1 g 2 b     |
+|                 | y: 1 b 1 r     |
+|                 | g: 2 b 1 r     |
+|                 | t: 1 b 1 g 1 r |
+|                 | )              |
+| p 1 1           |                |
+| o               |                |
+| s               | (              |
+|                 | z: 2 g 1 b     |
+|                 | y: 1 b 1 r     |
+|                 | g: 2 b 1 r     |
+|                 | t: 1 b 1 g 1 r |
+|                 | w: 1 g 2 b     |
+|                 | )              |
+| p 3 3           |                |
+| o               |                |
+| s               | (              |
+|                 | z: 2 g 1 b     |
+|                 | g: 2 b 1 r     |
+|                 | t: 1 b 1 g 1 r |
+|                 | y: 1 b 1 r     |
+|                 | w: 1 g 2 b     |
+|                 | )              |
+| P 1 1           |                |
+| o               |                |
+| s               | (              |
+|                 | z: 2 g 1 b     |
+|                 | g: 2 b 1 r     |
+|                 | t: 1 b 1 g 1 r |
+|                 | w: 1 g 2 b     |
+|                 | y: 1 b 1 r     |
+|                 | )              |
+| ? 1 1           | w 1            |
+| ? 2 2           | t 1            |
+| ? 2 0           | t 1            |
+| ? 3 2           | y 1            |
+| ? 3 0           | y 1            |
+| q               |                |
 
 
 #### Esempi lunghi
