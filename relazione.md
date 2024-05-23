@@ -396,7 +396,8 @@ I numeri e le frecce in bianco fanno riferimento alle regole applicate a quella 
 #### Esempio piano 2
 Il secondo esempio è invece formato dalle seguenti piastrelle nel piano:  
 
-![Esempio 2](img/esempio2.png)
+![Esempio 2](img/esempio2.png)  
+
 
 Tabella di **input/output**:  
 
