@@ -1,4 +1,4 @@
-# GALLIANO ANDREA 05460A - RELAZIONE PROGETTO DI LABORATORIO DI ALGORITMI E STRUTTURE DATI
+# GALLIANO ANDREA 05460A - RELAZIONE PROGETTO DI ALGORITMI E STRUTTURE DATI
 
 ### Indice
 - [Introduzione](#introduzione)
@@ -26,15 +26,15 @@
 
 
 ## Introduzione
-Per poter affrontare ragionevolmente il problmema, sono state utilizzate apposite strutture che risolvessero tutti i punti richiesti e che rappresentassero fedelmente il piano descritto all'interno della traccia.  
+Per poter affrontare ragionevolmente il problema, sono state utilizzate apposite strutture ed algoritmi che risolvessero tutti i punti richiesti e che rappresentassero fedelmente il piano descritto all'interno della traccia.  
 
 ### Strutture utilizzate
 
 #### Il piano
 
-Per poter rappresentare fedelmente il **piano** contenente le **piastrelle** a cui poter applicare le **regole di propagazione**, è stato necessario utilizzare una struttura che, per avere a disposizione tutte le informazioni necessarie alla memorizzazione delle **piastrelle**, avesse un campo che mettesse in relazione le coordinate **_(x, y)_** di una piastrella e i dati relativi all'*intensità con cui è accesa* ed il *colore*.  
-Per questo motivo, il primo campo del **piano** è il *puntatore all'indirizzo di memoria di una mappa dalla piastrella alla corrispondente colorazione*.  
-Il secondo campo della struttura è invece il *puntatore all'indirizzo di una slice di regole*, che torna utile nel momento in cui si decide di applicare una **regola di propagazione** a una o più piastrelle, modificandone il colore in caso di una o più regole rispettate.
+Per poter rappresentare fedelmente il **piano** contenente le **piastrelle** a cui poter applicare le **regole di propagazione**, è stato necessario utilizzare una struttura che, per avere a disposizione tutte le informazioni necessarie alla memorizzazione delle **piastrelle**, avesse un campo che mettesse in relazione le coordinate intere naturali **_(x, y)_** di una piastrella e i dati relativi all'*intensità con cui è accesa* ed il *colore*.  
+Per questo motivo, il primo campo del **piano** è il *puntatore all'indirizzo di memoria di una **mappa** dalla piastrella alla corrispondente colorazione*.  
+Il secondo campo della struttura è invece il *puntatore all'indirizzo di una slice di regole*, che torna utile nel momento in cui si decide di applicare una **regola di propagazione** a una o più piastrelle, modificandone il colore nel caso in cui la regola o le regole applicate venissero soddisfatte.
 
 ```Go
 type piano struct {
@@ -44,7 +44,7 @@ type piano struct {
 ```
 
 #### Le piastrelle
-Le **piastrelle** sono state pensate come una struttura i cui campi sono 2 interi rappresentati le coordinate **(x, y)** della stessa all'interno del piano.  
+Le **piastrelle** sono state pensate come una struttura i cui campi sono 2 *interi* rappresentanti le coordinate **_(x, y)_** della stessa all'interno del piano.  
 
 ```Go
 type piastrella struct {
@@ -54,7 +54,7 @@ type piastrella struct {
 ```
 
 #### La colorazione
-Come abbiamo visto per la prima struttura, per ogni **piastrella** accesa facente parte del **piano**, è necessario avere a disposizione altri 2 dati oltre le sue coordinate: l'*intensità* con cui è accesa nel **piano** ed il *colore*; queste informazioni è possibile salvarle all'interno di un'apposita struttura che è stata chiamata **colorazione**, con un campo intero ed una stringa (tornerà particolarmente utile anche nella memorizzazione delle **regole di propagazione**, i cui singoli addendi sono formati da un coefficiente intero ed una stringa rappresentante un colore).  
+Come abbiamo visto per la prima struttura, per ogni **piastrella** accesa facente parte del **piano**, è necessario avere a disposizione altri 2 dati oltre le sue coordinate: l'*intensità* con cui è accesa nel **piano** ed il *colore*; queste informazioni è possibile salvarle grazie ad un'apposita struttura che è stata chiamata **colorazione**, con un campo intero ed una stringa (tornerà particolarmente utile anche nella memorizzazione delle **regole di propagazione**, i cui singoli addendi sono formati da un coefficiente intero ed una stringa rappresentante un colore).  
 
 ```Go
 type colorazione struct {
@@ -75,7 +75,7 @@ type regolaSingola struct {
 ```
 
 ### Le funzioni principali
-Le funzioni implementate all'interno del programma, a fronte di un apposito input con i giusti comandi (si assume che l'input fornito sia **sempre** corretto), permettono di modificare il piano e prestando particolare attenzione all'uso delle **risorse sia spaziali che temporali**.  
+Gli algoritmi e le funzioni implementate all'interno del programma, assumendo che l'*input* sia **sempre** corretto, permettono di modificare il **piano** e prestando particolare attenzione all'uso delle **risorse sia spaziali che temporali**.  
 
 #### Colora
 
@@ -87,7 +87,7 @@ func colora(p piano, x int, y int, alpha string, i int) {
 
 La funzione **_colora_** riceve come parametri il **piano**, le coordinate intere **x** e **y**, il **colore** e l'**intensità** con cui si intende colorare la *piastrella*.  
 Per effettuare l'operazione di *colorazione*, viene assegnata alla mappa contenente le *piastrelle* nel **piano** il valore della corrispondente **colorazione**.  
-- **Analisi del tempo**: l'accesso alla mappa ha costo **_O(1)_** in termini di tempo. 
+- **Analisi del tempo**: l'accesso alla mappa ha costo **_O(1)_** in termini di tempo.  
 - **Analisi dello spazio**: non viene allocato alcuno spazio, di conseguenza il costo in termini di spazio è costante e nell'ordine di **_O(1)_**.
 
 #### Spegni
@@ -112,7 +112,8 @@ func regola(p piano, r string) {
 ```
 
 La funzione **_regola_** permette, dati in ingresso il **piano** ed una **stringa**, di aggiungere una nuova regola all'interno del piano stesso.  
-Per poterlo fare, è necessario, in primo luogo, effettuare un _parsing_ della stringa avuta per argomento, successivamente creare la regola (composta dai suoi 3 campi analizzati durante l'analisi della struttra **_"regolaSingola"_**) e, infine, *aggiungere la regola appena creata alla slice di regole facenti già parti del piano*.  
+Per poterlo fare, è necessario, in primo luogo, effettuare un _parsing_ della stringa avuta per argomento, successivamente creare la regola (composta dai suoi 3 campi analizzati durante l'analisi della struttra **_"regolaSingola"_**) e, infine, *aggiungere la regola appena creata alla slice di regole facenti già parti del piano*.
+
 - **Analisi del tempo**: Per l'analisi temporale della funzione è necessario tenere conto di 2 macro-operazioni (le restanti operazioni possiamo ipotizzare impieghino tutte tempo costante **_O(1)_**):
 1. L'esecuzione della funzione **_Split_**: complessità **_O(n)_**, dove **_n = numero di caratteri della stringa avuta per argomento_**;  
 2. Le iterazioni del ciclo *for* che scorre la *slice* di stringhe ritornata dalla stessa funzione **_Split_** (ovvero la variabile *"args"*): **_O(m)_**, con **_m = numero di elementi di args_**;  
@@ -128,7 +129,8 @@ func stato(p piano, x int, y int) (string, int) {
 }
 ```
 La funzione **stato** *restituisce e stampa i valori relativi al colore e l'intensità della piastrella delle coordinate avute per argomento*.  
-Per farlo, assegno ad una variabile il valore della mappa contenente le piastrelle del piano e un'altra, di tipo *bool*, per stampare (e, conseguentemente, anche ritornare) **se e solo se quella piastrella esiste nel piano**.  
+Per farlo, assegno ad una variabile il valore della mappa contenente le piastrelle del piano e un'altra, di tipo *bool*, per stampare (e, conseguentemente, anche ritornare) **se e solo se quella piastrella esiste nel piano**.
+
 - **Analisi del tempo**: Dal punto di vista del tempo, questa funzione è nell'ordine di **_O(1)_**, poiché tutte le operazioni che effettua (ovvero la restituzione di un valore della *mappa di piastrelle*, di un valore *bool* che indichi se quel valore esiste, il controllo prima della stmpa e il ritorno finale di **colore** e **intensità** della piastrella) impiegano tempo costante.  
 - **Analisi dello spazio**: Anche lo spazio allocato, a livello di variabili dichiarate e memoria utilizzata, da parte di **stato** è nell'ordine di **_O(1)_**.
 
@@ -143,12 +145,12 @@ func stampa(p piano) {
 
 La funzione **stampa** mostra tutte le **regole** del **piano** nel seguente formato:  
 (    
-*coloreFinale 1: coefficiente1 colore1 coefficiente2 colore2 ...*  
-*coloreFinale 2: coefficiente1 colore1 coefficiente2 colore2 ...*  
+*coloreFinale **1**: coefficiente1 colore1 coefficiente2 colore2 ...*  
+*coloreFinale **2**: coefficiente1 colore1 coefficiente2 colore2 ...*  
 .  
 .  
 .  
-*coloreFinale n: coefficiente1 colore1 coefficiente2 colore2 ...*  
+*coloreFinale **n**: coefficiente1 colore1 coefficiente2 colore2 ...*  
 )  
 Ciò che fa la funzione, a livello di codice, è *scorrere la slice di regole del **piano** e, per ognuna di essere scorrere gli addendi che la compongono stampando infine il coefficiente ed il colore dell'addendo* (separando opportunamente entrambi con uno spazio).
 
@@ -237,7 +239,7 @@ func bloccoGenerico(p piano, x, y int, omogeneo bool) (int, []piastrella) {
 
 A questo punto, è facile dedurre che sia le prestazioni riguardanti il *tempo* che quelle riguardanti lo *spazio* non variano rispetto alla funzione **_blocco_**.  
 Consideriamo inoltre **_n = numero di piastrelle totali nel piano_** come nella funzione analizzata precedentemente.  
-- **Analisi del tempo**: Complessità temporale nell'ordine di **_O(n)_**.
+- **Analisi del tempo**: Complessità temporale nell'ordine di **_O(n)_**.  
 - **Analisi dello spazio**: Complessità spaziale nell'ordine di **_O(n)_**.
 
 #### Propaga
@@ -255,7 +257,8 @@ Ciò che viene fatto dalla funzione è seguire i seguenti passaggi:
 3. Scorrere tutti gli **addendi** della *regola corrente*: **_O(8)_**, non è possibile avere più di 8 addendi a regola (vale infatti la stessa regola della *ricerca degli adiacenti*);  
 4. Scorrere tutti gli **adiacenti** trovati nel punto 1: anche in questo caso **_O(8)_**;  
 5. Se le piastrelle adiacenti rispettano una **regola di propagazione**, *ne viene incrementato il consumo e salvata sia la piastrella a cui applicare la regola che la regola stessa*: operazione che impiega tempo costante, quindi **_O(1)_**;
-6. Infine, se nel punto precedente è stato salvato qualcosa, viene effettuata la colorazione della piastrella (con *intensità = 1* nel caso in cui fosse stata spenta, oppure con l'intensità invariata rispetto a com'era prima della chiamata di **propaga**): **_O(m)_**, dove **_m = numero di elementi all'interno della mappa che contiene le piastrelle del piano_**.  
+6. Infine, se nel punto precedente è stato salvato qualcosa, viene effettuata la colorazione della piastrella (con *intensità = 1* nel caso in cui fosse stata spenta, oppure con l'intensità invariata rispetto a com'era prima della chiamata di **propaga**): **_O(m)_**, dove **_m = numero di elementi all'interno della mappa che contiene le piastrelle del piano_**.
+
 - **Analisi del tempo**: Avendo analizzato tutte le macro-operazioni svolte da **propaga**, è possibile dedurre che i costi temporali sono nell'ordine di **_O(n) + O(m)_** in linea generale, ma nel caso di **propaga**, dovendo applicare una **regola** a una sola **piastrella**, abbiamo **_m = 1_**, di conseguenza il consumo delle risorse temporali è semplicemente **_O(n)_**.  
 - **Analisi dello spazio**: per capire a pieno la complessità spaziale della funzione **propaga**, è necessario analizzare in dettaglio tutte le variabili che vengono allocate durante il suo funzionamento:  
 1. *Mappa* **_piastrelleRegole_**: dopo essere stata inizializzata, conterrà, al massimo, una sola *entry*, quindi **_O(1)_**;  
@@ -279,8 +282,9 @@ func propagaGenerico(p piano, x, y int) map[piastrella]regolaSingola {
 }
 ```
 
-L'analisi dei costi di **propagaBlocco** è però leggermente diversa rispetto a **propaga**.  
-- **Analisi del tempo**: In questo caso, a differenza della funzione **blocco**, che permetteva di applicare una **regola di propagazione** ad una e una sola **piastrella**, è necessario considerare il caso generale e concludere che la complessità temporale è **_O(n + m)_** (ricordando che **_n = numero di regole nel piano_**, mentre **_m = numero di elementi all'interno della mappa che contiene le piastrelle del piano_**).
+L'analisi dei costi di **propagaBlocco** è però leggermente diversa rispetto a **propaga**.
+
+- **Analisi del tempo**: In questo caso, a differenza della funzione **blocco**, che permetteva di applicare una **regola di propagazione** ad una e una sola **piastrella**, è necessario considerare il caso generale e concludere che la complessità temporale è **_O(n + m)_** (ricordando che **_n = numero di regole nel piano_**, mentre **_m = numero di elementi all'interno della mappa che contiene le piastrelle del piano_**).  
 - **Analisi dello spazio**: Le risorse spaziali più rilevanti utilizzate da **propagaBlocco** sono quelle riguardanti la *slice* di *mappe* **_"sliceCambiamenti"_** e la *slice* **_"piastrelleBlocco"_**, che conterranno entrambe, al più, **_n_ piastrelle totali del piano**.  
 Poiché tutte le altre variabili e strutture dati allocate e utilizzate dalla funzione occupano spazio costante **_O(1)_**, si può affermare che la complessità spaziale di **propagaBlocco** sia nell'ordine di **_O(n)_**.
 
