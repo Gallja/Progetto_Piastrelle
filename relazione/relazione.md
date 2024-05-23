@@ -310,7 +310,7 @@ Per questi esempi è stata inoltre creata una griglia per avere una **visualizza
 
 #### Esempio piano 1
 Per il primo esempio, il **piano** è composto dalle seguenti piastrelle e le seguenti **regole**:  
-![Esempio 1](img/esempio1.png)
+![Esempio 1](../img/esempio1.png)
 
 I numeri e le frecce in bianco fanno riferimento alle regole applicate a quella piastrella, mentre le scritte (in blu) di fianco alle regole di propagazione indicano se viene applicato il comando per la chiamata della funzione **propaga** (p) o **propagaBlocco** (P).  
 
