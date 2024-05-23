@@ -116,7 +116,6 @@ Per poterlo fare, è necessario, in primo luogo, effettuare un _parsing_ della s
 - **Analisi del tempo**: Per l'analisi temporale della funzione è necessario tenere conto di 2 macro-operazioni (le restanti operazioni possiamo ipotizzare impieghino tutte tempo costante **_O(1)_**):
 1. L'esecuzione della funzione **_Split_**: complessità **_O(n)_**, dove **_n = numero di caratteri della stringa avuta per argomento_**;  
 2. Le iterazioni del ciclo *for* che scorre la *slice* di stringhe ritornata dalla stessa funzione **_Split_** (ovvero la variabile *"args"*): **_O(m)_**, con **_m = numero di elementi di args_**;  
-
     Concludendo, possiamo dire che la complessità in termini di tempo è pari a **_O(n) + O(m) = O(n)_**, poiché **_m $\leq$ n_**.  
 - **Analisi dello spazio**: Per l'analisi dello spazio occupato dalla funzione, partiamo con le variabili **_"nuovaRegola"_** ed **_"addendoRegola"_**, che occupano spazio **_O(1)_**; la *slice* **_addendi_**, invece, cresce nell'ordine di **_O(8)_** (non posso **MAI** avere più di 8 addendi per ogni regola), mentre l'aggiunta della nuova regola alla lista di regole del **piano** possiamo ipotizzare occupi anch'essa **_O(1)_**. L'operazione più onerosa è dunque collegata alla chiamata della **_Split_**, che *crea una nuova slice di stringhe* in base alla lunghezza **_n_** di **_s_** (stringa passata per argomento): complessità pari a **_O(n)_**.  
 Conclusione: la complessità in termini di spazio è nell'ordine di **_O(n)_**.
@@ -515,6 +514,7 @@ Il terzo esempio ha lo scopo di testare in particolare le funzioni **propaga** e
 Nell'immagine d'esempio vengono riportate solo le prime 2 *propagazioni*, poiché le altre vengono effettuate in seguito a più ordinamenti delle regole.  
 Per vedere in maniera completa come cambia il **piano**, a fronte del *file di input*, ecco la tabella:  
 
+
 | INPUT           | OUTPUT         |
 |-----------------|----------------|
 | C 0 0 g 1       |                |
@@ -583,6 +583,7 @@ Per vedere in maniera completa come cambia il **piano**, a fronte del *file di i
 | ? 3 2           | y 1            |
 | ? 3 0           | y 1            |
 | q               |                |
+
 
 
 #### Esempi lunghi
