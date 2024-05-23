@@ -399,6 +399,8 @@ Il secondo esempio è invece formato dalle seguenti piastrelle nel piano:
 ![Esempio 2](img/esempio2.png)  
 
 
+Tabella di **input/output**:  
+
 | INPUT                                  | OUTPUT             |
 |----------------------------------------|--------------------|
 | C 1 13 h 1                             |                    |
