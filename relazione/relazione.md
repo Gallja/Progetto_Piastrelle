@@ -316,12 +316,12 @@ I numeri e le frecce in bianco fanno riferimento alle regole applicate a quella 
 
 #### Esempio piano 2
 Il secondo esempio, con un **piano** leggermente più grosso del precedente, è invece formato dalle seguenti piastrelle nel piano:  
-![Esempio 2](img/esempio2.png)  
+![Esempio 2](../img/esempio2.png)  
 
 
 #### Esempio piano 3
 Il terzo esempio ha lo scopo di testare in particolare le funzioni **propaga** e **propagaBlocco** dopo aver ordinato più volte le regole del **piano** attraverso la funzione **ordina**.  
-![Esempio 3](img/esempio3.png)
+![Esempio 3](../img/esempio3.png)
 
 Nell'immagine d'esempio vengono riportate solo le prime 2 *propagazioni*, poiché le altre vengono effettuate in seguito a più ordinamenti delle regole.  
 Per vedere in maniera completa come cambia il **piano**, a fronte del *file di input*, ecco la tabella:  
@@ -404,8 +404,8 @@ In particolare, i file **_inputLungo1.in_** e **_inputLungo2.in_**, formati da m
 
 File **_"inputLungo1.in"_**:  
 
-![Tempo inputLungo1](img/tempoEsempio1.png)
+![Tempo inputLungo1](../img/tempoEsempio1.png)
 
 File **_inputLungo2.in_**:  
 
-![Tempo inputLungo2](img/tempoEsempio2.png)
+![Tempo inputLungo2](../img/tempoEsempio2.png)
