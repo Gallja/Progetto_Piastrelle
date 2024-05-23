@@ -32,7 +32,7 @@ Per poter affrontare ragionevolmente il problmema, sono state utilizzate apposit
 
 #### Il piano
 
-Per poter rappresentare fedelmente il **piano** contenente le piastrelle a cui poter applicare le **regole di propagazione**, è stato necessario utilizzare una struttura che, prima di tutto, avesse un campo che mettesse in relazione le coordinate **_(x, y)_** di una piastrella e i dati relativi all'*intensità con cui è accesa* ed il *colore*.  
+Per poter rappresentare fedelmente il **piano** contenente le **piastrelle** a cui poter applicare le **regole di propagazione**, è stato necessario utilizzare una struttura che, prima di tutto, avesse un campo che mettesse in relazione le coordinate **_(x, y)_** di una piastrella e i dati relativi all'*intensità con cui è accesa* ed il *colore*.  
 Per questo motivo, il primo campo del **piano** è il *puntatore all'indirizzo di memoria di una mappa dalla piastrella alla corrispondente colorazione*.  
 Il secondo campo della struttura è invece il *puntatore all'indirizzo di una slice di regole*, che torna utile nel momento in cui si decide di applicare una **regola di propagazione** a una o più piastrelle.
 
@@ -54,7 +54,7 @@ type piastrella struct {
 ```
 
 #### La colorazione
-Come abbiamo visto per la prima struttura, per ogni **piastrella** accesa facente parte del **piano**, è necessario avere a disposizione 2 dati oltre le sue coordinate: l'*intensità* con cui è accesa nel **piano** ed il *colore*.  
+Come abbiamo visto per la prima struttura, per ogni **piastrella** accesa facente parte del **piano**, è necessario avere a disposizione altri 2 dati oltre le sue coordinate: l'*intensità* con cui è accesa nel **piano** ed il *colore*.  
 
 ```Go
 type colorazione struct {
@@ -64,7 +64,7 @@ type colorazione struct {
 ```
 
 #### Le regole
-Le **regole di propagazione** da applicare alle **piastrelle accese** nel **piano**, necessitano di 3 campi per poter essere rappresentate con una struttura: gli *addendi* che formano la regola, il *colore* che assume la **piastrella** dopo l'applicazione della regola ed il *consumo* (ovvero il numero di volte che la regola è stata applicata; questo campo permette di **ordinare** le regole in maniera **non decrescente**).  
+Le **regole di propagazione** da poter applicare alle **piastrelle accese** nel **piano**, necessitano di 3 campi per poter essere rappresentate con una struttura: gli *addendi* che formano la regola, il *colore* che assume la **piastrella** dopo l'applicazione della regola ed il *consumo* (ovvero il numero di volte che la regola è stata applicata; questo campo permette di **ordinare** le regole in maniera **non decrescente**).  
 
 ```Go
 type regolaSingola struct {
@@ -85,7 +85,7 @@ func colora(p piano, x int, y int, alpha string, i int) {
 }
 ```
 
-La funzione **_colora_** riceve come parametri il **piano**, le coordinate intere **x** e **y**, un **colore** e l'**intensità** con cui si intende colorare la *piastrella*.  
+La funzione **_colora_** riceve come parametri il **piano**, le coordinate intere **x** e **y**, il **colore** e l'**intensità** con cui si intende colorare la *piastrella*.  
 Per effettuare l'operazione di *colorazione*, viene assegnata alla mappa contenente le *piastrelle* nel **piano** il valore della corrispondente **colorazione**.  
 - **Analisi del tempo**: l'accesso alla mappa ha costo **_O(1)_** in termini di tempo. 
 - **Analisi dello spazio**: non viene allocato alcuno spazio, di conseguenza il costo in termini di spazio è costante e nell'ordine di **_O(1)_**.
@@ -113,8 +113,13 @@ func regola(p piano, r string) {
 
 La funzione **_regola_** permette, dati in ingresso il **piano** ed una **stringa**, di aggiungere una nuova regola all'interno del sistema.  
 Per poterlo fare, è necessario, in primo luogo, effettuare un _parsing_ della stringa avuta per argomento, successivamente creare la regola (composta dai suoi 3 campi analizzati in precedenza) e, infine, *aggiungere la regola appena creata alla slice di regole facenti già parti del piano*.  
-- **Analisi del tempo**:   
-- **Analisi dello spazio**:  
+- **Analisi del tempo**: Per l'analisi temporale della funzione è necessario tenere conto di 2 macro-operazioni (le restanti operazioni possiamo ipotizzare abbiano tutte tempo costante **_O(1)_**):
+1. L'esecuzione della funzione **_Split_**: complessità **_O(n)_**, dove **_n = numero di caratteri della stringa avuta per argomento_**;  
+2. L'iterazione del ciclo che scorre la *slice* di stringhe che ritorna la stessa funzione **_Split_** (ovvero la variabile *args*): **_O(m)_**, con **_m = numero di elementi di args_**;  
+
+Concludendo, possiamo dire che la complessità in termini di tempo è pari a **_O(n) + O(m) = O(n)_**, poiché **_m ≤ n_**.  
+- **Analisi dello spazio**: Per l'analisi dello spazio occupato dalla funzione, partiamo con le variabili **_"nuovaRegola"_** ed **_"addendoRegola"_**, che occupano spazio **_O(1)_**; la *slice* **_addendi_**, invece, cresce nell'ordine di **_O(8)_** (non posso **MAI** avere più di 8 addendi per ogni regola), mentre l'aggiunta della nuova regola alla lista di regole del **piano** possiamo ipotizzare sia anch'essa **_O(1)_**. L'operazione più onerosa è dunque collegata alla chiamata della **_Split_**, che *crea una nuova slice di stringhe* in base alla lunghezza **_n_** di **_s_** (stringa passata per argomento): complessità pari a **_O(n)_**.  
+Conclusione: la complessità in termini di spazio è nell'ordine di **_O(n)_**.
 
 #### Stato
 
@@ -201,13 +206,17 @@ visitate := make(map[piastrella]struct{})
 Questa mappa, **da piastrella a struct vuota**, permette di memorizzare solo le chiavi, in modo tale da trattare la struttura dati come un vero e proprio *set di piastrelle già visitate durante la BFS*.  
 Viene utilizzata una *struct vuota* al posto di una *variabile di tipo bool* **per poter risparmiare ulteriormente spazio in memoria**.  
 
-- **Analisi del tempo**: Questa funzione, oltre alle istruzioni di tempo costante nell'ordine di **_O(1)_**, ha le seguenti operazioni rilevanti per la stima dei costi temporali:  
+- **Analisi del tempo**: Questa funzione, oltre alle istruzioni di tempo costante nell'ordine di **_O(1)_** (come gli accessi/aggiunte di elementi delle mappe, controllo che la coda sia o meno vuota e l'incremento del valore di *intensità totale del blocco*), ha le seguenti operazioni rilevanti per la corretta stima dei costi temporali:  
     1. La funzione **_"enqueue"_**: la coda, grazie al campo con il puntatore a **_tail_**, permette di effettuare l'accodamento in tempo costante **_O(1)_**.  
-    2. La **_ricerca degli adiacenti_**: per ogni piastrella, questa ricerca comporta, nel caso peggiore, 8 iterazioni; a questo punto, è possibile concludere che la complessità temporale dell'operazione è **_O(8)_**.  
-    3. La **_BFS_**: la *ricerca in ampiezza* presenta 2 cicli: il primo che si interrompe quando *la coda è vuota*, il secondo che *scorre tutte le piastrelle circonvicine all'elemento corrente della coda*. La complessità è dunque **_O(n + m)_**, dove **_n = insieme di vertici nel grafo/insieme di piastrelle del blocco_** e **_m = archi che collegano i vertici_**.  
+    2. La **_ricerca degli adiacenti_**: per ogni piastrella, questa ricerca comporta, nel caso peggiore, 8 iterazioni; a questo punto, è possibile affermare che la complessità temporale dell'operazione è **_O(8)_**.  
+    3. La **_BFS_**: la *ricerca in ampiezza* presenta 2 cicli: il primo che si interrompe quando *la coda è vuota*, il secondo che *scorre tutte le piastrelle circonvicine all'elemento corrente della coda*. La complessità è dunque **_O(n + m)_**, dove **_n = insieme di vertici nel grafo/insieme di piastrelle del blocco_** e **_m = archi che collegano i vertici/piastrelle_**, che in questo caso è pari a **0**.  
 
-Concludendo, la complessità temporale di **blocco** è **_O(n + m)_**.  
-- **Analisi dello spazio**: 
+    Concludendo, la complessità temporale di **blocco** è **_O(n)_**.  
+- **Analisi dello spazio**: Per analizzare lo spazio occupato da questa *ricerca in ampiezza*, teniamo conto delle seguenti strutture dati:  
+1. Il *Set* **_"visitate"_**: dovendo memorizzare ogni piastrella che viene visitata, nel caso peggiore contiene **_n_** elementi totali del piano, quindi nell'ordine di **_O(n)_**;  
+2. La *slice* **_"piastrelleBlocco"_**, che, esattamente come il *Set*, può contenere fino a **_n_** elementi totali del piano, dunque anche in questo caso abbiamo una complessità spaziale **_O(n)_**;  
+3. Lo stesso ragionamento è possibile estenderlo anche alla *coda*, che avrà anch'essa complessità spaziale **_O(n)_**.  
+Conclusione: considerando l'analisi appena fatta e che la *slice* **_"circonvicine"_** (della funzione **_"cercaAdiacenti"_**) occupa **sempre** **_O(8)_**, la complessità **totale** della funzione **blocco** è **_O(n)_**.
 
 #### Blocco Omogeneo
 
@@ -227,9 +236,10 @@ func bloccoGenerico(p piano, x, y int, omogeneo bool) (int, []piastrella) {
 }
 ```
 
-A questo punto, è facile dedurre che le prestazioni riguardanti il *tempo*, che quelle riguardanti lo *spazio* non variano rispetto alla funzione **_blocco_**.
-- **Analisi del tempo**: Complessità temporale nell'ordine di **_O(n + m)_**.
-- **Analisi dello spazio**: 
+A questo punto, è facile dedurre che sia le prestazioni riguardanti il *tempo* che quelle riguardanti lo *spazio* non variano rispetto alla funzione **_blocco_**.  
+Consideriamo inoltre **_n = numero di piastrelle totali nel piano_** come nella funzione analizzata precedentemente.  
+- **Analisi del tempo**: Complessità temporale nell'ordine di **_O(n)_**.
+- **Analisi dello spazio**: Complessità spaziale nell'ordine di **_O(n)_**.
 
 #### Propaga
 
