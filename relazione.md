@@ -1,4 +1,4 @@
-# GALLIANO ANDREA 05460A - RELAZIONE PROGETTO DI ALGORITMI E STRUTTURE DATI
+# Galliano Andrea 05460A - Relazione Progetto "Piastrelle Digitali"
 
 ### Indice
 - [Introduzione](#introduzione)
