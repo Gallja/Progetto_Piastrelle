@@ -86,7 +86,8 @@ func colora(p piano, x int, y int, alpha string, i int) {
 ```
 
 La funzione **_colora_** riceve come parametri il **piano**, le coordinate intere **x** e **y**, il **colore** e l'**intensità** con cui si intende colorare la *piastrella*.  
-Per effettuare l'operazione di *colorazione*, viene assegnata alla mappa contenente le *piastrelle* nel **piano** il valore della corrispondente **colorazione**.  
+Per effettuare l'operazione di *colorazione*, viene assegnata alla mappa contenente le *piastrelle* nel **piano** il valore della corrispondente **colorazione**.
+
 - **Analisi del tempo**: l'accesso alla mappa ha costo **_O(1)_** in termini di tempo.  
 - **Analisi dello spazio**: non viene allocato alcuno spazio, di conseguenza il costo in termini di spazio è costante e nell'ordine di **_O(1)_**.
 
@@ -99,7 +100,8 @@ func spegni(p piano, x int, y int) {
 ```
 
 La funzione **_spegni_** permette di spegnere una piastrella che, al momento, si trova (accesa) all'interno del **piano** con intensità $\geq$ 1.  
-Per eseguire da codice questa operazione, ciò che viene fatto è un'*eliminazione della piastrella avuta per argomento tramite coordinate*.  
+Per eseguire da codice questa operazione, ciò che viene fatto è un'*eliminazione della piastrella avuta per argomento tramite coordinate*.
+
 - **Analisi del tempo**: Anche l'operazione di *delete* dalla mappa impiega tempo costante, di conseguenza la complessità temporale è nell'ordine di **_O(1)_**.  
 - **Analisi dello spazio**: Come per la complessità temporale, anche l'uso dello spazio è costante: **_O(1)_**.  
 
@@ -238,7 +240,8 @@ func bloccoGenerico(p piano, x, y int, omogeneo bool) (int, []piastrella) {
 ```
 
 A questo punto, è facile dedurre che sia le prestazioni riguardanti il *tempo* che quelle riguardanti lo *spazio* non variano rispetto alla funzione **_blocco_**.  
-Consideriamo inoltre **_n = numero di piastrelle totali nel piano_** come nella funzione analizzata precedentemente.  
+Consideriamo inoltre **_n = numero di piastrelle totali nel piano_** come nella funzione analizzata precedentemente.
+
 - **Analisi del tempo**: Complessità temporale nell'ordine di **_O(n)_**.  
 - **Analisi dello spazio**: Complessità spaziale nell'ordine di **_O(n)_**.
 
@@ -298,7 +301,7 @@ func ordina(p piano) {
 
 La funzione **ordina** permette di _ordinare le **regole di propagazione** del **piano** in ordine **non decrescente** in base al consumo delle regole stesse_. Per fare l'ordinamento, è stata utilizzata la funzione di libreria di **Go** [SortStableFunc](https://pkg.go.dev/slices#SortStableFunc), che permette di ordinare **in maniera stabile** riscrivendo il **comparatore** per confrontare gli elementi di una slice in modo analogo rispetto alla funzione [SortFunc](https://pkg.go.dev/slices#SortFunc).  
 
-- **Analisi del tempo**: L'ordinamento delle regole in base al loro consumo è basato su confronti e, nel caso peggiore, non si può scendere al di sotto dell'ordine di **_O(n log n)_**.
+- **Analisi del tempo**: L'ordinamento delle regole in base al loro consumo è basato su confronti e, nel caso peggiore, non si può scendere al di sotto dell'ordine di **_O(n log n)_**.  
 - **Analisi dello spazio**: Essendo un algoritmo di ordinamento **_in-place_**, non utilizza spazio ulteriore per la creazione di copie di slice, di conseguenza la funzione **ordina** utilizza solo un **puntatore alla slice da ordinare** ed è nell'ordine di **_O(1)_**.  
 
 ### Esempi di esecuzione
