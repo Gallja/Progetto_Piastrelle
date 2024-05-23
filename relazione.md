@@ -117,7 +117,7 @@ Per poterlo fare, è necessario, in primo luogo, effettuare un _parsing_ della s
 1. L'esecuzione della funzione **_Split_**: complessità **_O(n)_**, dove **_n = numero di caratteri della stringa avuta per argomento_**;  
 2. L'iterazione del ciclo che scorre la *slice* di stringhe che ritorna la stessa funzione **_Split_** (ovvero la variabile *args*): **_O(m)_**, con **_m = numero di elementi di args_**;  
 
-Concludendo, possiamo dire che la complessità in termini di tempo è pari a **_O(n) + O(m) = O(n)_**, poiché **_m ≤ n_**.  
+    Concludendo, possiamo dire che la complessità in termini di tempo è pari a **_O(n) + O(m) = O(n)_**, poiché **_m ≤ n_**.  
 - **Analisi dello spazio**: Per l'analisi dello spazio occupato dalla funzione, partiamo con le variabili **_"nuovaRegola"_** ed **_"addendoRegola"_**, che occupano spazio **_O(1)_**; la *slice* **_addendi_**, invece, cresce nell'ordine di **_O(8)_** (non posso **MAI** avere più di 8 addendi per ogni regola), mentre l'aggiunta della nuova regola alla lista di regole del **piano** possiamo ipotizzare sia anch'essa **_O(1)_**. L'operazione più onerosa è dunque collegata alla chiamata della **_Split_**, che *crea una nuova slice di stringhe* in base alla lunghezza **_n_** di **_s_** (stringa passata per argomento): complessità pari a **_O(n)_**.  
 Conclusione: la complessità in termini di spazio è nell'ordine di **_O(n)_**.
 
@@ -155,7 +155,7 @@ Ciò che fa la funzione, a livello di codice, è *scorrere la slice di regole de
 
 - **Analisi del tempo**: Questa funzione contiene 2 cicli: il primo scorre le **regole** nel **piano**, mentre il secondo scorre gli **addendi** di ogni regola. Il primo ciclo ha complessità **_O(n)_** (con *n = numero di regole nel piano*) ed il secondo effettua sempre, al più, 8 iterazioni (questo perché, per definizione del piano e dell'intorno di ogni piastrella con *max piastrelle circonvicine = 8*, **una regola di propagazione non può avere più di 8 addendi**).  
 Di conseguenza, la complessità temporale totale della funzione **stampa** è pari a **_O(n) x O(8)_ = O(n)**.  
-- **Analisi dello spazio**: La complessità spaziale di questa funzione di stampa è **_O(1)_**.  
+- **Analisi dello spazio**: La complessità spaziale di questa funzione di stampa è costante **_O(1)_**.  
 
 
 #### Blocco
@@ -251,14 +251,17 @@ func propaga(p piano, x, y int) {
 
 La funzione **propaga** permette di applicare ad una piastrella, le cui coordinate **_(x,y)_** vengono passate per argomento, _la prima **regola di propagazione** disponibile dell'elenco di regole nel **piano**_.  
 Ciò che viene fatto dalla funzione è seguire i seguenti passaggi:  
-1. Cercare le piastrelle circonvicine a quella avuta per argomento (utilizzando, come per **blocco** e **bloccoOmog** una **_ricerca in ampiezza_**): **_O(8)_**;  
+1. Cercare le piastrelle circonvicine a quella avuta per argomento (utilizzando, come già visto per **blocco** e **bloccoOmog** la **_ricerca degli adiacenti_**): **_O(8)_** e **mai** di più;  
 2. Scorrere tutte le **regole di propagazione** del **piano**: **_O(n)_**, dove **_n = numero di regole nel piano_**;  
-3. Scorrere tutti gli **addendi** della *regola corrente*: **_O(8)_**, non è possibile avere più di 8 addendi a regola;  
-4. Scorrere tutti gli **adiacenti** trovati nel punto 1: **_O(m)_**, con **_m = numero di piastrelle circonvicine a quella avuta per argomento_**;  
+3. Scorrere tutti gli **addendi** della *regola corrente*: **_O(8)_**, non è possibile avere più di 8 addendi a regola (vale infatti la stessa regola della *ricerca degli adiacenti*);  
+4. Scorrere tutti gli **adiacenti** trovati nel punto 1: anche in questo caso **_O(8)_**;  
 5. Se le piastrelle adiacenti rispettano una **regola di propagazione**, *ne viene incrementato il consumo e salvata sia la piastrella a cui applicare la regola che la regola stessa*: operazione che impiega tempo costante, quindi **_O(1)_**;
-6. Infine, se nel punto precedente è stato salvato qualcosa, viene effettuata la colorazione della piastrella (con intensità = 1 nel caso in cui fosse stata spenta, oppure con l'intensità invariata rispetto a com'era prima della chiamata di **propaga**): **_O(k)_**, dove **_k = numero di elementi all'interno della mappa che contiene le piastrelle del piano_**.  
-- **Analisi del tempo**: Avendo analizzato tutte le macro-operazioni svolte da **propaga**, è possibile dedurre che i costi temporali sono nell'ordine di **_O(n * m) + O(k)_**.  
-- **Analisi dello spazio**: 
+6. Infine, se nel punto precedente è stato salvato qualcosa, viene effettuata la colorazione della piastrella (con *intensità = 1* nel caso in cui fosse stata spenta, oppure con l'intensità invariata rispetto a com'era prima della chiamata di **propaga**): **_O(m)_**, dove **_m = numero di elementi all'interno della mappa che contiene le piastrelle del piano_**.  
+- **Analisi del tempo**: Avendo analizzato tutte le macro-operazioni svolte da **propaga**, è possibile dedurre che i costi temporali sono nell'ordine di **_O(n) + O(m)_** in linea generale, ma nel caso di **propaga**, dovendo applicare una **regola** a una sola **piastrella**, abbiamo **_m = 1_**, di conseguenza il consumo delle risorse temporali è semplicemente **_O(n)_**.  
+- **Analisi dello spazio**: per capire a pieno la complessità spaziale della funzione **propaga**, è necessario analizzare in dettaglio tutte le variabili che vengono allocate durante il suo funzionamento:  
+1. *Mappa* **_piastrelleRegole_**: dopo essere stata inizializzata, conterrà, al massimo, una sola *entry*, quindi **_O(1)_**;  
+2. *Slice* **_adiacenti_**: restituisce, al più, 8 piastrelle, quindi **_O(8)_**;  
+    Possiamo dunque stabilire che la complessità spaziale di **propaga** sia **_O(1)_**.
 
 #### Propaga Blocco
 
@@ -278,8 +281,9 @@ func propagaGenerico(p piano, x, y int) map[piastrella]regolaSingola {
 ```
 
 L'analisi dei costi di **propagaBlocco** è però leggermente diversa rispetto a **propaga**.  
-- **Analisi del tempo**: 
-- **Analisi dello spazio**: 
+- **Analisi del tempo**: In questo caso, a differenza della funzione **blocco**, che permetteva di applicare una **regola di propagazione** ad una e una sola **piastrella**, è necessario considerare il caso generale e concludere che la complessità temporale è **_O(n + m)_** (ricordando che **_n = numero di regole nel piano_**, mentre **_m = numero di elementi all'interno della mappa che contiene le piastrelle del piano_**).
+- **Analisi dello spazio**: Le risorse spaziali più rilevanti utilizzate da **propagaBlocco** sono quelle riguardanti la *slice* di *mappe* **_"sliceCambiamenti"_** e la *slice* **_"piastrelleBlocco"_**, che conterranno entrambe, al più, **_n_ piastrelle totali del piano**.  
+Poiché tutte le altre variabili e strutture dati allocate e utilizzate dalla funzione occupano spazio costante **_O(1)_**, si può affermare che la complessità spaziale di **propagaBlocco** sia nell'ordine di **_O(n)_**.
 
 #### Ordina
 
