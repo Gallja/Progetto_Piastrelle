@@ -98,7 +98,7 @@ func spegni(p piano, x int, y int) {
 }
 ```
 
-La funzione **_spegni_** permette di spegnere una piastrella che, al momento, si trova (accesa) all'interno del **piano** con intensità ≥ 1.  
+La funzione **_spegni_** permette di spegnere una piastrella che, al momento, si trova (accesa) all'interno del **piano** con intensità $\geq$ 1.  
 Per eseguire da codice questa operazione, ciò che viene fatto è un'*eliminazione della piastrella avuta per argomento tramite coordinate*.  
 - **Analisi del tempo**: Anche l'operazione di *delete* dalla mappa impiega tempo costante, di conseguenza la complessità temporale è nell'ordine di **_O(1)_**.  
 - **Analisi dello spazio**: Come per la complessità temporale, anche l'uso dello spazio è costante: **_O(1)_**.  
@@ -117,7 +117,7 @@ Per poterlo fare, è necessario, in primo luogo, effettuare un _parsing_ della s
 1. L'esecuzione della funzione **_Split_**: complessità **_O(n)_**, dove **_n = numero di caratteri della stringa avuta per argomento_**;  
 2. Le iterazioni del ciclo *for* che scorre la *slice* di stringhe ritornata dalla stessa funzione **_Split_** (ovvero la variabile *"args"*): **_O(m)_**, con **_m = numero di elementi di args_**;  
 
-    Concludendo, possiamo dire che la complessità in termini di tempo è pari a **_O(n) + O(m) = O(n)_**, poiché **_m ≤ n_**.  
+    Concludendo, possiamo dire che la complessità in termini di tempo è pari a **_O(n) + O(m) = O(n)_**, poiché **_m $\leq$ n_**.  
 - **Analisi dello spazio**: Per l'analisi dello spazio occupato dalla funzione, partiamo con le variabili **_"nuovaRegola"_** ed **_"addendoRegola"_**, che occupano spazio **_O(1)_**; la *slice* **_addendi_**, invece, cresce nell'ordine di **_O(8)_** (non posso **MAI** avere più di 8 addendi per ogni regola), mentre l'aggiunta della nuova regola alla lista di regole del **piano** possiamo ipotizzare occupi anch'essa **_O(1)_**. L'operazione più onerosa è dunque collegata alla chiamata della **_Split_**, che *crea una nuova slice di stringhe* in base alla lunghezza **_n_** di **_s_** (stringa passata per argomento): complessità pari a **_O(n)_**.  
 Conclusione: la complessità in termini di spazio è nell'ordine di **_O(n)_**.
 
