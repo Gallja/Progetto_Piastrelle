@@ -1,6 +1,6 @@
 # Progetto di Algoritmi e Strutture Dati: "Piastrelle Digitali"
 
-Questa repository contiene la soluzione proposta della traccia **_"Piastrelle Digitali"_** del corso di *laboratorio* di [**Algoritmi e Strutture Dati**](https://www.unimi.it/it/corsi/insegnamenti-dei-corsi-di-laurea/2024/algoritmi-e-strutture-dati-0).  
+Questa repository contiene la soluzione proposta della traccia **_"Piastrelle Digitali"_** del corso di *laboratorio* di [**Algoritmi e Strutture Dati**](https://www.unimi.it/it/corsi/insegnamenti-dei-corsi-di-laurea/2024/algoritmi-e-strutture-dati-0) del CdL di [**_Informatica_**](https://www.unimi.it/it/corsi/laurea-triennale/informatica) dell'[*Università degli Studi di Milano*](https://www.unimi.it/it).  
 
 I codici sono consultabili all'interno della directory **_"codice sorgente"_**:  
 - Il file **.go** contenente le funzioni principali del programma è disponibile [qui](code/05460A_Galliano_Andrea.go).  
