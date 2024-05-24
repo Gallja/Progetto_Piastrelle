@@ -22,7 +22,6 @@
     - [Esempio piano 1](#esempio-piano-1)
     - [Esempio piano 2](#esempio-piano-2)
     - [Esempio piano 3](#esempio-piano-3)
-    - [Esempi lunghi](#esempi-lunghi)
 
 
 ## Introduzione
@@ -396,17 +395,3 @@ Per vedere in maniera completa come cambia il **piano**, a fronte del *file di i
 | ? 3 2           | y 1            |
 | ? 3 0           | y 1            |
 | q               |                |
-
-
-
-#### Esempi lunghi
-Oltre agli esempi riportati sopra, vi sono 2 esempi che testano in particolare le performance del programma per effettuare una stima qualitativa delle prestazioni.  
-In particolare, i file **_inputLungo1.in_** e **_inputLungo2.in_**, formati da milioni di righe, producono correttamente il proprio output nei seguenti tempi:  
-
-File **_"inputLungo1.in"_**:  
-
-![Tempo inputLungo1](../img/tempoEsempio1.png)
-
-File **_inputLungo2.in_**:  
-
-![Tempo inputLungo2](../img/tempoEsempio2.png)
