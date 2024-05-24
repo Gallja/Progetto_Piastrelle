@@ -44,7 +44,7 @@ type piano struct {
 ```
 
 #### Le piastrelle
-Le **piastrelle** sono state pensate come una struttura i cui campi sono 2 *interi* rappresentanti le coordinate **_(x, y)_** della stessa all'interno del piano.  
+Le **piastrelle**, dalla specifica, sono delimitate da 4 punti, ma per rappresentarle univocamente, è bastato riprodurle tramite una struttura i cui campi sono 2 *interi* (ovvero le coordinate **_(x, y)_** della piastrella all'interno del piano).  
 
 ```Go
 type piastrella struct {
@@ -75,7 +75,7 @@ type regolaSingola struct {
 ```
 
 ### Le funzioni principali
-Gli algoritmi e le funzioni implementate all'interno del programma, assumendo che l'*input* sia **sempre** corretto, permettono di modificare il **piano** e prestando particolare attenzione all'uso delle **risorse sia spaziali che temporali**.  
+Gli algoritmi e le funzioni implementate all'interno del programma, assumendo che l'*input* sia **sempre** conforme a quello della specifica, permettono di modificare il **piano** e prestando particolare attenzione all'uso delle **risorse sia spaziali che temporali**.  
 
 #### Colora
 
@@ -86,7 +86,8 @@ func colora(p piano, x int, y int, alpha string, i int) {
 ```
 
 La funzione **_colora_** riceve come parametri il **piano**, le coordinate intere **x** e **y**, il **colore** e l'**intensità** con cui si intende colorare la *piastrella*.  
-Per effettuare l'operazione di *colorazione*, viene assegnata alla mappa contenente le *piastrelle* nel **piano** il valore della corrispondente **colorazione**.
+Per effettuare l'operazione di *colorazione*, viene assegnata alla mappa contenente le *piastrelle* nel **piano** il valore della corrispondente **colorazione**.  
+Consideriamo quest'operazione come **accensione di una piastrella nel piano**.
 
 - **Analisi del tempo**: l'accesso alla mappa ha costo **_O(1)_** in termini di tempo.  
 - **Analisi dello spazio**: non viene allocato alcuno spazio, di conseguenza il costo in termini di spazio è costante e nell'ordine di **_O(1)_**.
@@ -118,7 +119,7 @@ Per poterlo fare, è necessario, in primo luogo, effettuare un _parsing_ della s
 
 - **Analisi del tempo**: Per l'analisi temporale della funzione è necessario tenere conto di 2 macro-operazioni (le restanti operazioni possiamo ipotizzare impieghino tutte tempo costante **_O(1)_**):
 1. L'esecuzione della funzione **_Split_**: complessità **_O(n)_**, dove **_n = numero di caratteri della stringa avuta per argomento_**;  
-2. Le iterazioni del ciclo *for* che scorre la *slice* di stringhe ritornata dalla stessa funzione **_Split_** (ovvero la variabile *"args"*): **_O(m)_**, con **_m = numero di elementi di args_**;  
+2. Le iterazioni del ciclo *for* che scorre la *slice* di stringhe ritornata dalla stessa funzione **_Split_**: **_O(m)_**, con **_m = numero di elementi di args_**;  
     Concludendo, possiamo dire che la complessità in termini di tempo è pari a **_O(n) + O(m) = O(n)_**, poiché **_m $\leq$ n_**.  
 - **Analisi dello spazio**: Per l'analisi dello spazio occupato dalla funzione, partiamo con le variabili **_"nuovaRegola"_** ed **_"addendoRegola"_**, che occupano spazio **_O(1)_**; la *slice* **_addendi_**, invece, cresce nell'ordine di **_O(8)_** (non posso **MAI** avere più di 8 addendi per ogni regola), mentre l'aggiunta della nuova regola alla lista di regole del **piano** possiamo ipotizzare occupi anch'essa **_O(1)_**. L'operazione più onerosa è dunque collegata alla chiamata della **_Split_**, che *crea una nuova slice di stringhe* in base alla lunghezza **_n_** di **_s_** (stringa passata per argomento): complessità pari a **_O(n)_**.  
 Conclusione: la complessità in termini di spazio è nell'ordine di **_O(n)_**.
@@ -212,9 +213,9 @@ Viene utilizzata una *struct vuota* al posto di una *variabile di tipo bool* **p
 - **Analisi del tempo**: Questa funzione, oltre alle istruzioni di tempo costante nell'ordine di **_O(1)_** (come gli accessi/aggiunte di elementi delle mappe, controllo che la coda sia o meno vuota e l'incremento del valore di *intensità totale del blocco*), ha le seguenti operazioni rilevanti per la corretta stima dei costi temporali:  
     1. La funzione **_"enqueue"_**: la coda, grazie al campo con il puntatore a **_tail_**, permette di effettuare l'accodamento in tempo costante **_O(1)_**.  
     2. La **_ricerca degli adiacenti_**: per ogni piastrella, questa ricerca comporta, nel caso peggiore, 8 iterazioni; a questo punto, è possibile affermare che la complessità temporale dell'operazione è **_O(8)_**.  
-    3. La **_BFS_**: la *ricerca in ampiezza* presenta 2 cicli: il primo che si interrompe quando *la coda è vuota*, il secondo che *scorre tutte le piastrelle circonvicine all'elemento corrente della coda*. La complessità è dunque **_O(n + m)_**, dove **_n = insieme di vertici nel grafo/insieme di piastrelle del blocco_** e **_m = archi che collegano i vertici/piastrelle_**, che in questo caso è pari a **0**.  
+    3. La **_BFS_**: la *ricerca in ampiezza* presenta 2 cicli: il primo che si interrompe quando *la coda è vuota*, il secondo che *scorre tutte le piastrelle circonvicine all'elemento corrente della coda*. La complessità è dunque **_O(n + m)_**, dove **_n = insieme di vertici nel grafo/insieme di piastrelle del blocco_** e **_m = archi che collegano i vertici/piastrelle_**.  
 
-    Concludendo, la complessità temporale di **blocco** è **_O(n)_**.  
+    Concludendo, poiché **_m = 0_**, la complessità temporale di **blocco** è **_O(n)_**.  
 - **Analisi dello spazio**: Per analizzare lo spazio occupato da questa *ricerca in ampiezza*, teniamo conto delle seguenti strutture dati:  
 1. Il *Set* **_"visitate"_**: dovendo memorizzare ogni piastrella che viene visitata, nel caso peggiore contiene **_n_** elementi totali del piano, quindi nell'ordine di **_O(n)_**;  
 2. La *slice* **_"piastrelleBlocco"_**, che, esattamente come il *Set*, può contenere fino a **_n_** elementi totali del piano, dunque anche in questo caso abbiamo una complessità spaziale **_O(n)_**;  
