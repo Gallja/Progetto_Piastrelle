@@ -47,7 +47,7 @@ func creaPiano() piano {
 
 func esegui(p piano, s string) {
 	if s == "q" {
-		return
+		os.Exit(0)
 	}
 
 	if len(s) > 0 {
