@@ -26,7 +26,7 @@ type regolaSingola struct {
 }
 
 type piano struct {
-	piastrelle *map[piastrella]colorazione
+	piastrelle map[piastrella]colorazione
 	regole     *[]regolaSingola
 }
 
@@ -42,7 +42,7 @@ func main() {
 
 func creaPiano() piano {
 	piastrelleInPiano := make(map[piastrella]colorazione)
-	return piano{&piastrelleInPiano, &[]regolaSingola{}}
+	return piano{piastrelleInPiano, &[]regolaSingola{}}
 }
 
 func esegui(p piano, s string) {
@@ -107,11 +107,11 @@ func parseInput(argument string) (int, int, string, int) {
 }
 
 func colora(p piano, x int, y int, alpha string, i int) {
-	(*p.piastrelle)[piastrella{x, y}] = colorazione{i, alpha}
+	p.piastrelle[piastrella{x, y}] = colorazione{i, alpha}
 }
 
 func spegni(p piano, x int, y int) {
-	delete(*p.piastrelle, piastrella{x, y})
+	delete(p.piastrelle, piastrella{x, y})
 }
 
 func regola(p piano, r string) {
@@ -135,7 +135,7 @@ func regola(p piano, r string) {
 }
 
 func stato(p piano, x int, y int) (string, int) {
-	val, ok := (*p.piastrelle)[piastrella{x, y}]
+	val, ok := (p.piastrelle)[piastrella{x, y}]
 
 	if ok {
 		fmt.Println(val.colore, val.coefficiente)
@@ -166,7 +166,7 @@ func stampaRegola(r regolaSingola) {
 
 func bloccoGenerico(p piano, x, y int, omogeneo bool) (int, []piastrella) {
 	piastrelleInPiano := p.piastrelle
-	start, ok := (*piastrelleInPiano)[piastrella{x, y}]
+	start, ok := piastrelleInPiano[piastrella{x, y}]
 	sommaIntensita := 0
 
 	piastrelleBlocco := []piastrella{}
@@ -196,7 +196,7 @@ func bloccoGenerico(p piano, x, y int, omogeneo bool) (int, []piastrella) {
 
 			if !ok {
 				visitate[adiacenti[i]] = struct{}{}
-				val := (*piastrelleInPiano)[adiacenti[i]]
+				val := piastrelleInPiano[adiacenti[i]]
 
 				if !omogeneo || val.colore == start.colore {
 					sommaIntensita += val.coefficiente
@@ -221,7 +221,7 @@ func cercaAdiacenti(p piano, piastrella_ piastrella) []piastrella {
 	combY := []int{-1, -1, 1, -1, 1, 0, 0, 1}
 
 	for i := 0; i < len(combX); i++ {
-		_, ok := (*piastrelleInPiano)[piastrella{piastrella_.x + combX[i], piastrella_.y + combY[i]}]
+		_, ok := piastrelleInPiano[piastrella{piastrella_.x + combX[i], piastrella_.y + combY[i]}]
 
 		if ok {
 			circonvicine = append(circonvicine, piastrella{piastrella_.x + combX[i], piastrella_.y + combY[i]})
@@ -258,7 +258,7 @@ func propagaGenerico(p piano, x, y int) map[piastrella]regolaSingola {
 
 			for k := 0; k < len(adiacenti) && coeffAddendo > 0; k++ {
 
-				if (*piastrelleInPiano)[adiacenti[k]].colore == regole[i].addendi[j].colore {
+				if piastrelleInPiano[adiacenti[k]].colore == regole[i].addendi[j].colore {
 					coeffAddendo--
 				}
 
@@ -309,7 +309,7 @@ func coloraPiastrelle(p piano, piastrelleRegole map[piastrella]regolaSingola) {
 	piastrelleInPiano := p.piastrelle
 
 	for k, v := range piastrelleRegole {
-		val, ok := (*piastrelleInPiano)[k]
+		val, ok := piastrelleInPiano[k]
 
 		if !ok {
 			colora(p, k.x, k.y, v.coloreFinale, 1)
