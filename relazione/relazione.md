@@ -32,12 +32,12 @@ Per poter affrontare ragionevolmente il problema, sono state utilizzate apposite
 #### Il piano
 
 Per poter rappresentare fedelmente il **piano** contenente le **piastrelle** a cui poter applicare le **regole di propagazione**, è stato necessario utilizzare una struttura che, per avere a disposizione tutte le informazioni necessarie alla memorizzazione delle **piastrelle**, avesse un campo che mettesse in relazione le coordinate intere naturali **_(x, y)_** di una piastrella e i dati relativi all'*intensità con cui è accesa* ed il *colore*.  
-Per questo motivo, il primo campo del **piano** è il *puntatore all'indirizzo di memoria di una **mappa** dalla piastrella alla corrispondente colorazione*.  
+Per questo motivo, il primo campo del **piano** è il *una **mappa** dalla piastrella alle corrispondenti proprietà di colorazione ed intensità*.  
 Il secondo campo della struttura è invece il *puntatore all'indirizzo di una slice di regole*, che torna utile nel momento in cui si decide di applicare una **regola di propagazione** a una o più piastrelle, modificandone il colore nel caso in cui la regola o le regole applicate venissero soddisfatte.
 
 ```Go
 type piano struct {
-    piastrelle *map[piastrella]colorazione
+    piastrelle map[piastrella]colorazione
     regole     *[]regolaSingola
 }
 ```
