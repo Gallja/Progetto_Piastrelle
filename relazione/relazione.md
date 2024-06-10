@@ -2,6 +2,7 @@
 
 ### Indice
 - [Introduzione](#introduzione)
+    - [Organizzazione del codice](#organizzazione-del-codice)
 - [Strutture utilizzate](#strutture-utilizzate)  
     - [Piano](#il-piano)
     - [Piastrelle](#le-piastrelle)
@@ -23,9 +24,45 @@
     - [Esempio piano 2](#esempio-piano-2)
     - [Esempio piano 3](#esempio-piano-3)
 
+\newpage
 
 ## Introduzione
 Per poter affrontare ragionevolmente il problema, sono state utilizzate apposite strutture ed algoritmi che risolvessero tutti i punti richiesti e che rappresentassero fedelmente il piano descritto all'interno della traccia.  
+
+### Organizzazione del codice
+I file, all'interno del file .zip della consegna, sono organizzati nel seguente modo: 
+
+```
+05460A_Galliano_Andrea  
+|  
+|--- code  
+|    |
+|    |-- 05460A_Galliano_Andrea.go
+|    |-- queue.go
+|    |-- go.mod
+|    |-- main
+|
+|--- inputs
+|    |
+|    |-- input1.in
+|    |-- input2.in
+|    |-- input3.in
+|
+|--- outputs
+|    |
+|    |-- output1.in
+|    |-- output2.in
+|    |-- output3.in
+|
+|--- README.txt
+|
+|--- relazione.pdf
+```
+
+Per eseguire il programma è necessario entrare all'interno della cartella **_code_** ed eseguire il comando  
+```GO
+go run . < nomeFileInput.in
+```
 
 ### Strutture utilizzate
 
