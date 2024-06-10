@@ -61,7 +61,7 @@ I file, all'interno del file .zip della consegna, sono organizzati nel seguente 
 
 Per eseguire il programma è necessario entrare all'interno della cartella **_code_** ed eseguire il comando  
 ```GO
-go run . < nomeFileInput.in
+go run . < percorso_file_input/nome_file_input.in
 ```
 
 ### Strutture utilizzate
