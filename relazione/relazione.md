@@ -59,9 +59,9 @@ I file, all'interno del file .zip della consegna, sono organizzati nel seguente 
 |--- relazione.pdf
 ```
 
-Per eseguire il programma è necessario entrare all'interno della cartella **_code_** ed eseguire il comando  
+Per eseguire il programma ed i vari input è necessario entrare all'interno della cartella **_code_** ed eseguire il comando  
 ```GO
-go run . < percorso_file_input/nome_file_input.in
+go run . < ../inputs/nome_file_input.in
 ```
 
 ### Strutture utilizzate
