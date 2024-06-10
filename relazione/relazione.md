@@ -287,7 +287,7 @@ func propagaGenerico(p piano, x, y int) map[piastrella]regolaSingola {
 
 L'analisi dei costi di **propagaBlocco** è però leggermente diversa rispetto a **propaga**.
 
-- **Analisi del tempo**: In questo caso, a differenza della funzione **blocco**, che permetteva di applicare una **regola di propagazione** ad una e una sola **piastrella**, è necessario considerare il caso generale e concludere che la complessità temporale è **_O(n + m)_** (ricordando che **_n = numero di regole nel piano_**, mentre **_m = numero di elementi all'interno della mappa che contiene le piastrelle del piano_**).  
+- **Analisi del tempo**: In questo caso, a differenza della funzione **blocco**, che permetteva di applicare una **regola di propagazione** ad una e una sola **piastrella**, è necessario considerare il caso generale e concludere che la complessità temporale è **_O(n x m)_** (ricordando che **_n = numero di regole nel piano_**, mentre **_m = numero di elementi all'interno del blocco di piastrelle_**).  
 - **Analisi dello spazio**: Le risorse spaziali più rilevanti utilizzate da **propagaBlocco** sono quelle riguardanti la *slice* di *mappe* **_"sliceCambiamenti"_** e la *slice* **_"piastrelleBlocco"_**, che conterranno entrambe, al più, **_n_ piastrelle totali del piano**.  
 Poiché tutte le altre variabili e strutture dati allocate e utilizzate dalla funzione occupano spazio costante **_O(1)_**, si può affermare che la complessità spaziale di **propagaBlocco** sia nell'ordine di **_O(n)_**.
 
@@ -301,7 +301,7 @@ func ordina(p piano) {
 
 La funzione **ordina** permette di _ordinare le **regole di propagazione** del **piano** in ordine **non decrescente** in base al consumo delle regole stesse_. Per fare l'ordinamento, è stata utilizzata la funzione di libreria di **Go** [SortStableFunc](https://pkg.go.dev/slices#SortStableFunc), che permette di ordinare **in maniera stabile** riscrivendo il **comparatore** per confrontare gli elementi di una slice in modo analogo rispetto alla funzione [SortFunc](https://pkg.go.dev/slices#SortFunc).  
 
-- **Analisi del tempo**: L'ordinamento delle regole in base al loro consumo è basato su confronti e, nel caso peggiore, non si può scendere al di sotto dell'ordine di **_O(n log n)_**.  
+- **Analisi del tempo**: L'ordinamento delle regole in base al loro consumo è basato su confronti e, nel caso peggiore, non si può scendere al di sotto dell'ordine di **_O(n log n)_** (si tratta infatti di un tipo di algoritmo basato su una variazione del **_Merge Sort_**).  
 - **Analisi dello spazio**: Essendo un algoritmo di ordinamento **_in-place_**, non utilizza spazio ulteriore per la creazione di copie di slice, di conseguenza la funzione **ordina** utilizza solo un **puntatore alla slice da ordinare** ed è nell'ordine di **_O(1)_**.  
 
 ### Esempi di esecuzione
