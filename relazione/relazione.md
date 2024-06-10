@@ -208,7 +208,7 @@ func blocco(p piano, x, y int) {
 
 La funzione **blocco** stampa la somma delle intensità delle piastrelle facenti parte del medesimo blocco; per poterlo fare con complessità spaziali e temporali contenute, è stato necessario partire dalle coordinate **_(x, y)_** di una piastrella avuta per argomento per poi _effettuare una **visita in ampiezza ("Breadth-First-Search")** ed avere a disposizione le piastrelle circonvicine del blocco_ (il **_blocco_** di cui fa parte la piastrella, passata come argomento, è quindi considerato come **Grafo _G = (n, m)_**).  
 
-La ricerca degli adiacenti o delle piastrelle circonvicine ad un'altra, le cui coordinate **_(x, y)_** sono passate per argomento ad un'apposita funzione **_"cercaAdiacenti"_**, non fa altro che _scorrere tutte le possibili **8 combinazioni** di coordinate di piastrelle circonvicine per poi restituirle all'interno di una slice di piastrelle_.
+La ricerca degli adiacenti o delle piastrelle circonvicine ad un'altra, le cui coordinate sono passate per argomento ad un'apposita funzione **_"cercaAdiacenti"_**, non fa altro che _scorrere tutte le possibili **8 combinazioni** di coordinate di piastrelle circonvicine per poi restituirle all'interno di una slice di piastrelle_.
 
 ```Go
 func cercaAdiacenti(p piano, piastrella_ piastrella) []piastrella {
